@@ -251,7 +251,7 @@
         <div class="row equal">
             <div class="col-xs-12 col-sm-12 col-md-6 col-md-push-3" style="margin: 0; padding: 0">
                 <?php
-                    include_once("svg/basemap.svg")
+                    include_once("svg/quartiers.svg")
                 ?>
             </div>
 
