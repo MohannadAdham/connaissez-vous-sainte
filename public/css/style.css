@@ -1,0 +1,63 @@
+.jumbotron   {
+    height: 450px;
+    background-size: cover;
+    background-image: url("../images/saint-etienne.jpg");
+    background-position: center center;
+}
+
+#header1 {
+    color:rgb(250, 250, 250);
+    font-size: 70px;
+    font-family: Anton;
+    font-weight: 60px;
+    float: none;
+    display: table-cell;
+    height: 380px;
+    opacity: 0.75;
+    /*vertical-align: middle;*/
+    padding-top: 15%;
+}
+
+.text-bottom {
+    position: absolute;
+    bottom: 0;
+}
+
+#top {
+    height: 75px;
+}
+
+
+footer {
+    background-color: #222;
+}
+
+
+@media screen and (min-width: 768px) {
+    h1 {
+        font-size:60px;
+    }
+
+}
+
+@media screen and (min-width: 992px) {
+    h1 {
+        font-size: 80px;
+    }
+}
+@media screen and (min-width: 1200px) {
+    h1 {
+        font-size: 100px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    h1 {
+        font-size:20px;
+    }
+}
+
+
+
+
+
