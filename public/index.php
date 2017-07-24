@@ -4,7 +4,7 @@
     if (!isset($_COOKIE['id'])) {
         do {
         $uniqID = uniqid();
-        $exists = $db->query('SELECT * FROM utilisateurs WHERE uniq_id = $uniqID');
+        $exists = $db->query("SELECT * FROM utilisateurs WHERE uniq_id = {$uniqID}");
         } while ($exists == 1);
 
         setcookie('id', $uniqID, time() + (86400 * 30));
