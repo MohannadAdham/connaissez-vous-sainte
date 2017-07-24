@@ -12,14 +12,14 @@ CREATE TABLE `utilisateurs` (
 `score_test_3` int(11) DEFAULT 0,
 `score_test_4` int(11) DEFAULT 0,
 `score_test_5` int(11) DEFAULT 0,
-PRIMARY KEY (`id`)
+PRIMARY KEY (`utilisateur_id`)
 );
 
 DROP TABLE IF EXISTS `rel_utilisateur_quartier`;
 CREATE TABLE `rel_utilisateur_quartier` (
 `utilisateur_id` int(11) NOT NULL,
 `quart_id` int(11) NOT NULL,
-`familiarite` int(11)
+`familiarite` int(11),
 PRIMARY KEY (`utilisateur_id`, `quart_id`)
 );
 
