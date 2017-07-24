@@ -3,16 +3,16 @@
     // setcookie('id', '', time() - (86400 * 30));
     if (!isset($_COOKIE['id'])) {
         do {
-        $uniqueID = uniqid();
-        $exists = $db->query('SELECT * FROM utilisateurs WHERE uniqueID = $uniqueID');
+        $uniqID = uniqid();
+        $exists = $db->query('SELECT * FROM utilisateurs WHERE uniqID = $uniqID');
         } while ($exists == 1);
 
-        setcookie('id', $uniqueID, time() + (86400 * 30));
+        setcookie('id', $uniqID, time() + (86400 * 30));
 
         try {
-            $stmt = $db->prepare("INSERT INTO utilisateurs (uniqueID, sexe) VALUES (:uniqueID,:sexe)");
-            $stmt->bindParam(':uniqueID', $uniqueID);
-            $stmt->bindValue(':sexe', 'h');
+            $stmt = $db->prepare("INSERT INTO utilisateurs (uniqID, sexe) VALUES (:uniqID,:sexe)");
+            $stmt->bindParam(':uniqID', $uniqID);
+            $stmt->bindParam(':sexe', 'h');
             $stmt->execute();
 
         } catch (Exception $e) {

@@ -2,18 +2,19 @@
     include_once("../private/connect/connect.php");
     include_once("../private/fetchall.php");
     if (isset($_COOKIE['id'])) {
-        $uniqueID = $_COOKIE['id'];
+        $uniqID = $_COOKIE['id'];
     } else {
         do {
-        $uniqueID = uniqid();
-        $exists = $db->query('SELECT * FROM utilisateurs WHERE uniqueID = $uniqueID');
+
+        $uniqID = uniqid();
+        $exists = $db->query('SELECT * FROM utilisateurs WHERE uniqID = $uniqID');
         } while ($exists == 1);
 
-        setcookie('id', $uniqueID, time() + (86400 * 30));
+        setcookie('id', $uniqID, time() + (86400 * 30));
 
         try {
-            $stmt = $db->prepare("INSERT INTO utilisateurs (uniqueID, sexe) VALUES (:uniqueID,:sexe)");
-            $stmt->bindParam(':uniqueID', $uniqueID);
+            $stmt = $db->prepare("INSERT INTO utilisateurs (uniqID, sexe) VALUES (:uniqID,:sexe)");
+            $stmt->bindParam(':uniqID', $uniqID);
             $stmt->bindParam(':sexe', 'h');
             $stmt->execute();
 
