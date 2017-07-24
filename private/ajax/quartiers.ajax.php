@@ -3,8 +3,12 @@
     $uniq_id = $_GET['id'];
     $quart_correct = $_GET['quart_correct'];
     $quart_score = 18;
+
+
+
+
     foreach($quart_correct as $quartID) {
-        // Update the'quartiers' table
+        // Update table 'quartiers'
         try {
             $stmt = $db->prepare("UPDATE quartiers SET familiarite = familiarite + :quart_score
                 WHERE quartID = :quartID");
@@ -14,7 +18,7 @@
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-        // Update 'rel_utilisateur_quartier' table
+        // Update table 'rel_utilisateur_quartier'
         try {
             $stmt = $db->prepare('SELECT utilisateur_id FROM utilisateurs WHERE uniq_id = :uniq_id');
             $stmt->bindParam(':uniq_id', $uniq_id);
@@ -50,5 +54,29 @@
             echo $e->getMessage();
         }
         $quart_score -= 1;
+    }
+
+
+    // Update table "utilisateurs"
+    // Calculate the new user score (percentage)
+    $user_score = (sizeof($quart_correct) * 100) / 18;
+    try {
+        // Get the user's old score
+        $stmt = $db->query("SELECT score_test_1 FROM utilisateurs  WHERE utilisateur_id = {$    id}");
+        $row = $stmt->fetch(PDO::FETCH_NUM);
+        $user_old_score = $row[0];
+    } catch (Exception $e) {
+        $e->getMessage();
+    }
+
+    // echo "user score: " . $user_score . "<br>user old score " . $user_old_score;
+
+    try {
+        // update only if the new score is higher than the old one
+        if ($user_score > $user_old_score) {
+        $stmt = $db->query("UPDATE utilisateurs SET score_test_1 = {$user_score}");
+        }
+    } catch (Exception $e) {
+        $e->getMessage();
     }
 ?>
