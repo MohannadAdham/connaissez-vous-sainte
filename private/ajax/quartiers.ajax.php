@@ -6,7 +6,6 @@
 
 
 
-
     foreach($quart_correct as $quartID) {
         // Update table 'quartiers'
         try {
@@ -62,7 +61,7 @@
     $user_score = (sizeof($quart_correct) * 100) / 18;
     try {
         // Get the user's old score
-        $stmt = $db->query("SELECT score_test_1 FROM utilisateurs  WHERE utilisateur_id = {$    id}");
+        $stmt = $db->query("SELECT score_test_1 FROM utilisateurs  WHERE utilisateur_id = {$id}");
         $row = $stmt->fetch(PDO::FETCH_NUM);
         $user_old_score = $row[0];
     } catch (Exception $e) {
@@ -74,7 +73,8 @@
     try {
         // update only if the new score is higher than the old one
         if ($user_score > $user_old_score) {
-        $stmt = $db->query("UPDATE utilisateurs SET score_test_1 = {$user_score}");
+        $stmt = $db->query("UPDATE utilisateurs SET score_test_1 = {$user_score} WHERE
+            utilisateur_id = {$id}");
         }
     } catch (Exception $e) {
         $e->getMessage();
