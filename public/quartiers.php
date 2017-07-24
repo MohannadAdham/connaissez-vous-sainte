@@ -13,9 +13,8 @@
         setcookie('id', $uniqID, time() + (86400 * 30));
 
         try {
-            $stmt = $db->prepare("INSERT INTO utilisateurs (uniqID, sexe) VALUES (:uniqID,:sexe)");
+            $stmt = $db->prepare("INSERT INTO utilisateurs (uniqID) VALUES (:uniqID)");
             $stmt->bindParam(':uniqID', $uniqID);
-            $stmt->bindParam(':sexe', 'h');
             $stmt->execute();
 
         } catch (Exception $e) {
