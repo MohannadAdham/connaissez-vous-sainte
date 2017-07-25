@@ -20,7 +20,7 @@
 
 
     }
-    echo "<script>alert(" . $_COOKIE['id'] . ");</script>";
+
 ?>
 
 
@@ -38,6 +38,17 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap-social.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+
+    <style >
+        .card {
+            margin-bottom: 4em;
+            box-shadow: 5px 5px 25px 0;
+            border-radius: 0.375em;
+            height: 22.5em;
+            background-color: #fff;
+
+            }
+    </style>
 
 
 </head>
@@ -62,7 +73,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                          role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span>
-                         Testes <span class="caret"></span></a>
+                         Tests <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="quartiers.php">Noms des Quartiers</a></li>
                             <li><a href="quartiers_centres.php">Centres des Quartiers</a></li>
@@ -89,14 +100,20 @@
 
     <section class="container">
         <div class="row">
-            <div class="col-sm-6 col-md-4" style="margin-bottom: 4em;  ">
-                <a href="quartiers.php"><img  src="images/quartiers.png" class="img-responsive" style="border: solid 1px #222" alt="geographic game"></a>
+            <div class="col-sm-6 col-md-4" >
+                <div class="card">
+                   <a href="quartiers.php"><img  src="images/puzzle_quartiers.png" class="img-responsive"></a>
+                </div>
             </div>
             <div class="col-sm-6 col-md-4" style="margin-bottom: 4em;  ">
-                <img  src="images/quartiers.png" class="img-responsive" style="border: solid 1px #222" alt="geographic game">
+                <div class="card">
+                    <img  src="images/quartiers.png" class="img-responsive">
+                </div>
             </div>
             <div class="col-sm-6 col-md-4" style="margin-bottom: 4em;  ">
-                <img  src="images/quartiers.png" class="img-responsive" style="border: solid 1px black" alt="geographic game">
+                <div class="card">
+                    <img  src="images/quartiers.png" class="img-responsive">
+                </div>
             </div>
             <div class="col-md-6"></div>
         </div>
