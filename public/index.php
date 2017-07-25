@@ -54,7 +54,7 @@
 </head>
 
 <body style="background: #DDD">
-    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <nav style="background-color: #1c262f; box-shadow: 0 5px 10px 0; border-color:transparent;" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -102,7 +102,7 @@
         <div class="row">
             <div class="col-sm-6 col-md-4" >
                 <div class="card">
-                   <a href="quartiers.php"><img  src="images/puzzle_quartiers.png" class="img-responsive"></a>
+                   <a href="quartiers.php"><img  src="images/quartiers.png" class="img-responsive"></a>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4" style="margin-bottom: 4em;  ">
