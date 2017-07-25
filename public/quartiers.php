@@ -193,7 +193,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                          role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-list-alt"></span>
-                         Testes <span class="caret"></span></a>
+                         Tests <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li class="active"><a href="quartiers.php">Noms des Quartiers</a></li>
                             <li><a href="quartiers_centres.php">Centres des Quartiers</a></li>
