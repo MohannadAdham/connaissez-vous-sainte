@@ -42,8 +42,13 @@
         }
         .navbar {
             background-color: #1c262f;
-            box-shadow: 0 5px 10px 0;
+            box-shadow: 0 5px 15px black;
             border-color:transparent;
+        }
+        .navbar-brand {
+            position: relative;
+            top: -5px;
+            left: -10px;
         }
 
         .panel-body {

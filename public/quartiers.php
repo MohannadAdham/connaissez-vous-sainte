@@ -69,6 +69,11 @@
             border: solid 1px #222;
             vertical-align: middle;
         }
+        .navbar-brand {
+            position: relative;
+            top: -5px;
+            left: -10px;
+        }
         .side-bar {
             background: #ccc;
             padding-top: 3%;

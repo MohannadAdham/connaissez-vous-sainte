@@ -48,6 +48,12 @@
             background-color: #fff;
 
             }
+
+        .navbar-brand {
+            position: relative;
+            top: -5px;
+            left: -10px;
+        }
         footer {
             margin-top: 4em;
         }
@@ -57,7 +63,7 @@
 </head>
 
 <body style="background: #DDD">
-    <nav style="background-color: #1c262f; box-shadow: 0 5px 10px 0; border-color:transparent;" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <nav style="background-color: #1c262f; box-shadow: 0 5px 15px black; border-color:transparent;" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -70,7 +76,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.php"><span class="glyphicon glyphicon-home"
+                    <li><a href="index.php"><span class="glyphicon glyphicon-home"
                          aria-hidden="true"></span> Accueil</a></li>
                     <li><a href="about.html"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span> À propos</a></li>
                     <li class="dropdown">
