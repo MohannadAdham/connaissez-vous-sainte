@@ -140,17 +140,14 @@
             margin-left: -17%;
             margin-top: -18%;
         }
-
     }
 
 
-
-    @media (min-width: 200px) {
       .row.equal {
         display: flex;
         flex-wrap: wrap;
-      }
     }
+
 
     @media (min-width: 1000px) {
         .row.equal {
@@ -228,11 +225,11 @@
                     $quart_id = $row['quartID'];
                     $quartier = $row['quartNom'];
                     if ($quart_id >= 14 && $quart_id % 2 != 0) {
-                         echo '<button style="background: #999; border-color: #222" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" nom="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #999; border-color: #999; class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" nom="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                     }
 
                     if ($quart_id >= 14 && $quart_id % 2 == 0) {
-                         echo '<button style="background: #222; border-color: #999" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" nom="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #1c262f; border-color: #1c262f; class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" nom="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                     }
                 }
             ?>

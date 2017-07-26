@@ -41,13 +41,16 @@
 
     <style >
         .card {
-            margin-bottom: 4em;
+            margin-top: 2em;
             box-shadow: 5px 5px 25px 0;
             border-radius: 0.375em;
             height: 22.5em;
             background-color: #fff;
 
             }
+        footer {
+            margin-top: 4em;
+        }
     </style>
 
 
@@ -105,12 +108,12 @@
                    <a href="quartiers.php"><img  src="images/quartiers.png" class="img-responsive"></a>
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4" style="margin-bottom: 4em;  ">
+            <div class="col-sm-6 col-md-4">
                 <div class="card">
                     <img  src="images/quartiers.png" class="img-responsive">
                 </div>
             </div>
-            <div class="col-sm-6 col-md-4" style="margin-bottom: 4em;  ">
+            <div class="col-sm-6 col-md-4">
                 <div class="card">
                     <img  src="images/quartiers.png" class="img-responsive">
                 </div>

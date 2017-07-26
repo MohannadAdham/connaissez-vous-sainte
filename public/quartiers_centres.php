@@ -16,25 +16,125 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link href="css/bootstrap-social.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-
+<!--     <link rel="stylesheet" href="css/style.css">
+ -->
 
     <style type="text/css">
-        html, body, { height: 100%; margin: 0; padding: 0; }
-        #map { height: 100%; }
+        html, body, { height: 100%; margin: 0; padding: 0; overflow: hidden}
+        #map { height: 100%;
+               z-index: 1 }
         body {
             background: #1c262f;
         }
         .panel-group {
             margin-top: 100px;
         }
+        #side-bar {
+            box-shadow: -5px 5px 20px black;
+            background-color: #2c363f;
+            z-index: 10;
+            height: 100%;
+        }
+        .navbar {
+            background-color: #1c262f;
+             box-shadow: 0 5px 10px 0;
+              border-color:transparent;
+        }
+
+        .panel-body {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+
+        @media screen and (max-width: 991px) {
+            #map {height: 70%;}
+            #side-bar {
+                height: 30%;
+                padding-top: 1em;
+                overflow: hidden;
+            }
+            #panel-1, #panel-2 {
+                margin-top: 1em;
+                height: 80%;
+            }
+            #panel-1 { margin-right: -5px; margin-left: 5px; }
+            #panel-2 { margin-left: -5px; }
+        }
+
+
+
+        @media screen and (max-width: 520px) {
+            #map {height: 50%;}
+
+            #side-bar {
+                height: 50%;
+                padding-top: 1em;
+                overflow: hidden;
+            }
+
+            #panel-1, #panel-2 {
+                margin-top: 1em;
+                height: 80%;
+            }
+
+            #panel-1 { margin-right: -5px; margin-left: 5px; }
+            #panel-2 { margin-left: -5px; }
+            }
+
+            .panel-body {
+                font-size: 12px;
+            }
+
+
+            .navbar {
+                position: fixed;
+                top: -60px;
+            }
+            .navbar-toggle {
+                position: relative;
+                top: 60px;
+                z-index: 10;
+                background-color: #1c262f ;
+            }
+
+            .navbar-brand {
+                font-size: 14px;
+            }
+
+            #side-bar {
+                box-shadow: 0px -5px 20px #222;
+            }
+        }
+
+        @media screen and (min-width: 992px) {
+
+            #panel-1 {
+                height: 35%;
+                margin-top: 20%;
+            }
+            #panel-2 {
+                height: 50%;
+                margin-top: 30px;
+
+            }
+
+        }
+
+
+
+
+
+
+
+
    </style>
 </head>
 
 
 
 <body >
-    <nav role="navigation" class="navbar navbar-inverse navbar-fixed-top">
+    <nav  role="navigation" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -69,20 +169,41 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div id="map" class="col-md-8"></div>
-        <div class="col-xs-12 col-md-4">
-            <div class="panel-group">
-                <div class="panel panel-success">
-                    <div class="panel-heading">Panel 1 Header</div>
-                    <div class="panel-body">Panel 1 Content</dive>
+        <div id="map" class="col-md-9"></div>
+        <div id="side-bar" class="col-xs-12 col-md-3">
+            <div class="row" style="height: 100%">
+                <div id="panel-1" class="col-xs-6 col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">Indiquer le point central du quartier suivant en cliquant sur la carte <br><br>
+                        <span style=" font-weight: 400"><span style="color: #395;" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
+                        <div class="btn btn-block btn-lg btn-primary" disabled>Chateaucreux</div>
+                        <br>
+</div>
+                    </div>
                 </div>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Panel 2 Header</div>
-                    <div class="panel-body">Panel 2 Content </div>
+                 <div id="panel-2" class="col-xs-6 col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">Comment connaissez-vous ce quartier ? <br>
+                        <form class="form">
+                            <div class="radio">
+                              <label><input type="radio" name="optradio">J'y habite ou j'y ai habité</label>
+                            </div>
+                            <div class="radio">
+                              <label><input type="radio" name="optradio">J'y travaille ou j'y ai travaillé</label>
+                            </div>
+                            <div class="radio">
+                              <label><input type="radio" name="optradio" >Autre</label>
+                            </div>
+                            <br>
+                             <button type="submit" class="btn btn-success btn-block btn-lg">Enregistrer et Continuer</button>
+                        </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
       </div>
+    </div>
     </div>
 
    <script>
