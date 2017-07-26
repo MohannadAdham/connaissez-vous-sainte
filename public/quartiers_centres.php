@@ -58,8 +58,14 @@
                 margin-top: 1em;
                 height: 80%;
             }
-            #panel-1 { margin-right: -5px; margin-left: 5px; }
-            #panel-2 { margin-left: -5px; }
+            #panel-1 {  margin-right: -5px; margin-left: 5px; }
+            #panel-2 {  margin-left: -5px; }
+
+            #btn-quart {
+                position: relative;
+                top: 0.7rem;
+            }
+
         }
 
 
@@ -82,9 +88,9 @@
             #panel-2 { margin-left: -5px; }
             }
 
-            .panel-body {
+/*            .panel-body {
                 font-size: 12px;
-            }
+            }*/
 
 
             .navbar {
@@ -176,9 +182,9 @@
                     <div class="panel panel-primary">
                         <div class="panel-body">Indiquer le point central du quartier suivant en cliquant sur la carte <br><br>
                         <span style=" font-weight: 400"><span style="color: #395;" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
-                        <div class="btn btn-block btn-lg btn-primary" disabled>Chateaucreux</div>
+                        <div id="btn-quart" class="btn btn-block btn-lg btn-primary" disabled>Chateaucreux</div>
                         <br>
-</div>
+                        </div>
                     </div>
                 </div>
                  <div id="panel-2" class="col-xs-6 col-md-12">
