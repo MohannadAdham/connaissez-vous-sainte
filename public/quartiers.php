@@ -76,12 +76,13 @@
             margin: 0;
             position: relative;
             z-index: 1;
+            border: 0;
         }
         #side-bar-left {
-            box-shadow: 5px 5px 20px 0;
+            box-shadow: 10px 10px 25px 0;
         }
         #side-bar-right {
-            box-shadow: -5px 5px 20px 0;
+            box-shadow: -10px 10px 25px 0;
         }
         .btn {
             overflow: hidden;
@@ -159,8 +160,6 @@
         padding-bottom: -99999px;
     }
     }
-
-
 
     @media screen and (max-width: 1200px) {
         .btn-block {

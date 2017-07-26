@@ -29,7 +29,7 @@
         }
 
         #side-bar {
-            box-shadow: -5px 5px 20px black;
+            box-shadow: 15px 15px 35px black;
             background-color: #2c363f;
             z-index: 10;
             height: 100%;
@@ -171,8 +171,8 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div id="map" class="col-md-9"></div>
-        <div id="side-bar" class="col-xs-12 col-md-3">
+        <div id="map" class="col-md-9 col-md-push-3"></div>
+        <div id="side-bar" class="col-xs-12 col-md-3 col-md-pull-9">
             <div class="row" style="height: 100%">
                 <div id="panel-0" class="col-md-12" style="height: 100px"><div>
                 <div id="panel-1" class="col-xs-12 col-md-12">
