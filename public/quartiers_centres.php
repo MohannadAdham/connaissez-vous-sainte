@@ -23,22 +23,27 @@
         html, body, { height: 100%; margin: 0; padding: 0; overflow: hidden}
         #map { height: 100%;
                z-index: 1 }
+
         body {
             background: #1c262f;
         }
-        .panel-group {
-            margin-top: 100px;
-        }
+
         #side-bar {
             box-shadow: -5px 5px 20px black;
             background-color: #2c363f;
             z-index: 10;
             height: 100%;
         }
+        #panel-1-inside, #panel-2-inside {
+            margin-right: -15px;
+            margin-left: -15px;
+            border: 0;
+            box-shadow: 5px 5px 15px #333;
+        }
         .navbar {
             background-color: #1c262f;
-             box-shadow: 0 5px 10px 0;
-              border-color:transparent;
+            box-shadow: 0 5px 10px 0;
+            border-color:transparent;
         }
 
         .panel-body {
@@ -46,20 +51,35 @@
             font-size: 16px;
         }
 
+        @media screen and (min-width: 992px) {
 
-        @media screen and (max-width: 991px) {
-            #map {height: 70%;}
+            #panel-1 {
+                margin-top: 25%;
+            }
+            #panel-2 {
+                margin-top: 5%;
+            }
             #side-bar {
-                height: 30%;
+                overflow: hidden;
+            }
+        }
+
+
+        @media screen and (max-width: 991px) and (min-width: 521px) {
+            html, body, { height: 100%; margin: 0; padding: 0; overflow: hidden;}
+            #map {height: 80%;}
+            #side-bar {
+                height: 20%;
                 padding-top: 1em;
                 overflow: hidden;
+                box-shadow: 0 -5px 10px 0;
             }
             #panel-1, #panel-2 {
                 margin-top: 1em;
                 height: 80%;
             }
-            #panel-1 {  margin-right: -5px; margin-left: 5px; }
-            #panel-2 {  margin-left: -5px; }
+
+            #panel-2 {display: none;}
 
             #btn-quart {
                 position: relative;
@@ -71,27 +91,21 @@
 
 
         @media screen and (max-width: 520px) {
-            #map {height: 50%;}
+            #map {height: 60%;}
 
             #side-bar {
-                height: 50%;
+                height: 40%;
                 padding-top: 1em;
                 overflow: hidden;
             }
 
             #panel-1, #panel-2 {
-                margin-top: 1em;
-                height: 80%;
+                margin-top: 10px;
             }
 
-            #panel-1 { margin-right: -5px; margin-left: 5px; }
-            #panel-2 { margin-left: -5px; }
-            }
 
-/*            .panel-body {
-                font-size: 12px;
-            }*/
 
+            #panel-2 {display: none;}
 
             .navbar {
                 position: fixed;
@@ -112,24 +126,6 @@
                 box-shadow: 0px -5px 20px #222;
             }
         }
-
-        @media screen and (min-width: 992px) {
-
-            #panel-1 {
-                height: 35%;
-                margin-top: 20%;
-            }
-            #panel-2 {
-                height: 50%;
-                margin-top: 30px;
-
-            }
-
-        }
-
-
-
-
 
 
 
@@ -178,17 +174,17 @@
         <div id="map" class="col-md-9"></div>
         <div id="side-bar" class="col-xs-12 col-md-3">
             <div class="row" style="height: 100%">
-                <div id="panel-1" class="col-xs-6 col-md-12">
-                    <div class="panel panel-primary">
+                <div id="panel-0" class="col-md-12" style="height: 100px"><div>
+                <div id="panel-1" class="col-xs-12 col-md-12">
+                    <div id="panel-1-inside" class="panel panel-primary">
                         <div class="panel-body">Indiquer le point central du quartier suivant en cliquant sur la carte <br><br>
                         <span style=" font-weight: 400"><span style="color: #395;" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
                         <div id="btn-quart" class="btn btn-block btn-lg btn-primary" disabled>Chateaucreux</div>
-                        <br>
                         </div>
                     </div>
                 </div>
-                 <div id="panel-2" class="col-xs-6 col-md-12">
-                    <div class="panel panel-primary">
+                 <div id="panel-2" class="col-xs-12 col-md-12">
+                    <div id="panel-2-inside" class="panel panel-primary">
                         <div class="panel-body">Comment connaissez-vous ce quartier ? <br>
                         <form class="form">
                             <div class="radio">
@@ -243,7 +239,7 @@
 
        });
 
-       marker.addListener('click', function() {
+        marker.addListener('click', function() {
         infowindow.open(map, marker);
        });
 
