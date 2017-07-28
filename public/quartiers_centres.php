@@ -307,6 +307,11 @@
         mapTypeId: google.maps.MapTypeId.HYBRID
         });
 
+         // Different zoom for mobile devices
+        if ($('.navbar').css('top') == '-60px') {
+            map.setZoom(13); // for mobile
+        }
+
         function addLatLng(event) {
           // Add a new marker at the new plotted point on the polyline.
           marker.setPosition(event.latLng);
@@ -321,10 +326,12 @@
                 marker.setMap(map);
                 markersArray.push(marker);
                 console.log(markersArray);
+                // Hide the first panel for tablet and mobile devices
                 if ($('#btn-quart').css('font-size') == '22px' ||
                     $('.navbar').css('top') == '-60px') {
                     $('#panel-1').slideUp(400);
                 }
+                // Show the second panel for all devices
                 setTimeout(function() {
                     $('#panel-2').slideDown(600);
                     $("#drop-audio").get(0).play();
@@ -343,21 +350,27 @@
        // });
      }
 
+        // prohobit the submit button from refresh the page
         $("form").submit(function(e) {
             e.preventDefault();
             });
 
 
-
         $(".btn-submit").click(function() {
             if (counter < 2) {
+                // hide the two panels one after the other
                 $("#panel-2").slideUp(500);
                 setTimeout(function() {
                     $('#panel-1').slideUp(500);
                 }, 550);
                 // reset the map center and zoom
                 map.setCenter(map_center);
-                map.setZoom(14);
+                // Different zoom for mobile devices
+                if ($('.navbar').css('top') == '-60px') {
+                    map.setZoom(13); // for mobile
+                } else {
+                map.setZoom(14); // for desktop, laptop and tablet
+                }
                 // reset the radio buttons' answer
                 $('input[name="quart_choice"]').prop('checked', false);
                 // show panel-1 again
@@ -366,6 +379,7 @@
                     $("#btn-quart").text(quart_noms[counter + 1]);
                     counter += 1;
                 }, 600);
+                // allow the click event on the map again
                 clickable = true;
             }
         });
