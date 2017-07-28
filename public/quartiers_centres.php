@@ -284,6 +284,8 @@
      var counter = 0;
      var map_center = {lat: 45.439695, lng: 4.387178};
      var clickable = true;
+     var user_id = <?php echo $id ?>;
+     console.log("user id : " + user_id);
      var markersArray = [];
      var quart_ids = [<?php echo $quart_ids[0] . ", " . $quart_ids[1] . ", " . $quart_ids[2]?>];
      var quart_noms = [<?php echo '"' . $quart_noms[0] . '", "' . $quart_noms[1] . '", "' . $quart_noms[2] . '"'?>];
@@ -307,14 +309,14 @@
         panControl:false,
         mapTypeId: google.maps.MapTypeId.HYBRID
         });
-
+         map.setOptions({ draggableCursor: 'crosshair' });
          // Different zoom for mobile devices
         if ($('.navbar').css('top') == '-60px') {
             map.setZoom(13); // for mobile
         }
 
         function addLatLng(event) {
-          // Add a new marker at the new plotted point on the polyline.
+          // Add a new marker at the new plotted point
           marker.setPosition(event.latLng);
           marker.setMap(map);
         }
@@ -326,6 +328,8 @@
                 marker.setPosition(event.latLng);
                 marker.setMap(map);
                 markersArray.push(marker);
+                lat = marker.getPosition().lat();
+                lng = marker.getPosition().lng();
                 console.log(markersArray);
                 // Hide the first panel for tablet and mobile devices
                 if ($('#btn-quart').css('font-size') == '22px' ||
@@ -338,6 +342,7 @@
                     $("#drop-audio").get(0).play();
                 }, 600);
                 clickable = false;
+                map.setOptions({ draggableCursor: 'default' });
         }
         });
 
@@ -372,8 +377,25 @@
                 } else {
                 map.setZoom(14); // for desktop, laptop and tablet
                 }
+
+                // send the answer to the server
+                answer = $('input[name="quart_choice"]:checked').val();
+                console.log(answer);
+                $.ajax({
+                    url: '../private/ajax/quartiers_centres.ajax.php',
+                    type: 'GET',
+                    data: {
+                        'id' : user_id,
+                        'quart_id' : quart_ids[counter],
+                        'quart_choix' : answer,
+                        'user_center_lat' : lat,
+                        'user_center_lng' : lng
+                    }
+                });
+
                 // reset the radio buttons' answer
                 $('input[name="quart_choice"]').prop('checked', false);
+
                 // show panel-1 again
                 setTimeout(function() {
                     $('#panel-1').slideDown(500);
@@ -382,6 +404,9 @@
                 }, 600);
                 // allow the click event on the map again
                 clickable = true;
+                map.setOptions({ draggableCursor: 'crosshair' });
+            } else if (counter == 2) {
+
             }
         });
 
