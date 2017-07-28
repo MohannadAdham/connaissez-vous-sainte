@@ -77,6 +77,7 @@
             border: 0;
             box-shadow: 5px 5px 15px #333;
             opacity: 0.9;
+            color: #2e3d49;
         }
         .navbar {
             background-color: #1c262f;
@@ -266,7 +267,7 @@
                               <label><input type="radio" name="quart_choice" value="etude">J'y etudie ou j'y ai etudié</label>
                             </div>
                             <div class="radio">
-                              <label><input type="radio" name="optradio" >Autre</label>
+                              <label><input type="radio" name="quart_choice" value="autre" >Autre</label>
                             </div>
                              <button type="submit" class="btn-submit btn btn-success btn-block btn-lg">Enregistrer et Continuer</button>
                         </form>

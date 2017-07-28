@@ -57,6 +57,27 @@
         footer {
             margin-top: 4em;
         }
+
+        .card-head {
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-top: 4%;
+            font-weight: 500;
+            font-size: 2rem;;
+            line-height: 2.25rem;
+            color: #2e3d49;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .card-body {
+            margin-left: 5%;
+            margin-right: 5%;
+            margin-top: 4%;
+            font-size: 1.5rem;
+            color: #2e3d49;
+            font-weight: 500;
+            font-family: "Open Sans", sans-serif;
+        }
     </style>
 
 
@@ -112,16 +133,22 @@
             <div class="col-sm-6 col-md-4" >
                 <div class="card">
                    <a href="quartiers.php"><img  src="images/quartiers.png" class="img-responsive"></a>
+                   <div class="card-head">Test 1 : Positions des Quartiers</div>
+                   <div class="card-body">condition préalable : Aucune</div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card">
                     <img  src="images/quartiers_centres_2.png" class="img-responsive">
+                    <div class="card-head">Test 2 : Centres des Quartiers</div>
+                   <div class="card-body">condition préalable : Test 1</div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card">
                     <img  src="images/quartiers.png" class="img-responsive">
+                    <div class="card-head">Test 3 : Points d'Interets VS Points de repères</div>
+                   <div class="card-body">condition préalable : Test 2</div>
                 </div>
             </div>
             <div class="col-md-6"></div>
