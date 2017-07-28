@@ -229,11 +229,11 @@
                     $quart_id = $row['quartID'];
                     $quartier = $row['quartNom'];
                     if ($quart_id >= 14 && $quart_id % 2 != 0) {
-                         echo '<button style="background: #999; border-color: #999; class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" nom="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button  style="background: #999; border-color: #999; class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                     }
 
                     if ($quart_id >= 14 && $quart_id % 2 == 0) {
-                         echo '<button style="background: #1c262f; border-color: #1c262f; class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" nom="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button  style="background: #1c262f; border-color: #1c262f; class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                     }
                 }
             ?>
@@ -273,13 +273,13 @@
                     $quart_id = $row['quartID'];
                     $quartier = $row['quartNom'];
                     if ($counter % 2 != 0  && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button data-toggle="tooltip" style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                          $id_quart_ajoute[] = $quart_id;
                          $counter += 1;
                     }
 
                     if ($counter % 2 == 0 && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                         $id_quart_ajoute[] = $quart_id;
                         $counter += 1;
                     }
@@ -298,13 +298,13 @@
                     $quart_id = $row['quartID'];
                     $quartier = $row['quartNom'];
                     if ($counter % 2 == 0  && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                          $id_quart_ajoute[] = $quart_id;
                          $counter += 1;
                     }
 
                     if ($counter % 2 != 0 && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                         $id_quart_ajoute[] = $quart_id;
                         $counter += 1;
                     }
