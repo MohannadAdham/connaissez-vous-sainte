@@ -116,7 +116,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card">
-                    <img  src="images/quartiers.png" class="img-responsive">
+                    <img  src="images/quartiers_centres_2.png" class="img-responsive">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
