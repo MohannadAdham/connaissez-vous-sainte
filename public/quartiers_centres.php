@@ -248,7 +248,7 @@
                     <div id="panel-1-inside" class="panel panel-primary">
                         <div class="panel-body">Indiquer le point central du quartier suivant en cliquant sur la carte <br><br>
                         <span style=" font-weight: 400"><span style="color: #395;" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
-                        <div id="btn-quart" class="btn btn-block btn-lg btn-primary" disabled></div>
+                        <div id="btn-quart" class="btn btn-block btn-lg btn-primary" data-toggle="tooltip" title="quartier name" disabled></div>
                         </div>
                     </div>
                 </div>
