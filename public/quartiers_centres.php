@@ -257,13 +257,13 @@
                         <div class="panel-body">Comment connaissez-vous ce quartier ? <br>
                         <form class="form">
                             <div class="radio">
-                              <label><input type="radio" name="optradio">J'y habite ou j'y ai habité</label>
+                              <label><input type="radio" name="quart_choice" value="habite">J'y habite ou j'y ai habité</label>
                             </div>
                             <div class="radio">
-                              <label><input type="radio" name="optradio">J'y travaille ou j'y ai travaillé</label>
+                              <label><input type="radio" name="quart_choice" value="travail">J'y travaille ou j'y ai travaillé</label>
                             </div>
                             <div class="radio">
-                              <label><input type="radio" name="optradio" >J'y fais mes courses</label>
+                              <label><input type="radio" name="quart_choice" value="etude">J'y etudie ou j'y ai etudié</label>
                             </div>
                             <div class="radio">
                               <label><input type="radio" name="optradio" >Autre</label>
@@ -355,8 +355,12 @@
                 setTimeout(function() {
                     $('#panel-1').slideUp(500);
                 }, 550);
+                // reset the map center and zoom
                 map.setCenter(map_center);
                 map.setZoom(14);
+                // reset the radio buttons' answer
+                $('input[name="quart_choice"]').prop('checked', false);
+                // show panel-1 again
                 setTimeout(function() {
                     $('#panel-1').slideDown(500);
                     $("#btn-quart").text(quart_noms[counter + 1]);
