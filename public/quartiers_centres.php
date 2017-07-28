@@ -1,6 +1,43 @@
 <?php
-    include_once("../private/connect/connect.php");
+    require_once("../private/connect/connect.php");
     include_once("../private/fetchall.php");
+    function get_unique_id() {
+        if (isset($_COOKIE['id'])) {
+            $uniqID = $_COOKIE['id'];
+            return $uniqID;
+        } else {
+            alert("Please take the first test");
+        }
+    }
+
+    function id_from_unique_id($db, $uniq_id) {
+        $stmt = $db->prepare('SELECT utilisateur_id FROM utilisateurs WHERE uniq_id = :uniq_id');
+        $stmt->bindParam(':uniq_id', $uniq_id);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        $id = $row[0];
+        return $id;
+    }
+
+    $uniq_id = get_unique_id();
+    $id = id_from_unique_id($db, $uniq_id);
+
+
+    function get_quartiers($db, $id) {
+        $stmt = $db->query("SELECT quartID, quartNom FROM  quartiers INNER JOIN  rel_utilisateur_quartier ON (quart_id = quartID) WHERE utilisateur_id = {$id} ORDER BY rel_utilisateur_quartier.familiarite DESC");
+        $quart_noms = [];
+        $quart_ids = [];
+        for ($i=0; $i < 3; $i++) {
+            $row = $stmt->fetch(PDO::FETCH_NUM);
+            $quart_ids[$i] = $row[0];
+            $quart_noms[$i] = $row[1];
+        }
+        return [$quart_ids, $quart_noms];
+    }
+
+    $quartiers = get_quartiers($db, $id);
+    $quart_ids = $quartiers[0];
+    $quart_noms = $quartiers[1];
 ?>
 
 <html>
@@ -39,6 +76,7 @@
             margin-left: -15px;
             border: 0;
             box-shadow: 5px 5px 15px #333;
+            opacity: 0.9;
         }
         .navbar {
             background-color: #1c262f;
@@ -54,6 +92,17 @@
         .panel-body {
             font-weight: bold;
             font-size: 16px;
+        }
+
+        #panel-2 {
+            display: none;
+            position: relative;
+        }
+
+        #btn-quart, .btn[type=submit] {
+            font-size: 16px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         @media screen and (min-width: 992px) {
@@ -72,9 +121,9 @@
 
         @media screen and (max-width: 991px) and (min-width: 521px) {
             html, body, { height: 100%; margin: 0; padding: 0; overflow: hidden;}
-            #map {height: 80%;}
+            #map {height: 70%;}
             #side-bar {
-                height: 20%;
+                height: 30%;
                 padding-top: 1em;
                 overflow: hidden;
                 box-shadow: 0 -5px 10px 0;
@@ -83,12 +132,21 @@
                 margin-top: 1em;
                 height: 80%;
             }
+            #panel-1-inside, #panel-2-inside {
+                margin-right: 0;
+                margin-left: 0;
+            }
+
+            .panel-body {
+                font-size: 18px;
+            }
 
             #panel-2 {display: none;}
 
-            #btn-quart {
+            #btn-quart, .btn[type=submit] {
                 position: relative;
-                top: 0.7rem;
+/*                top: 0.7rem;
+*/                font-size: 22px;
             }
 
         }
@@ -105,7 +163,7 @@
             }
 
             #panel-1, #panel-2 {
-                margin-top: 10px;
+                margin-top: 0;
             }
 
 
@@ -129,6 +187,12 @@
 
             #side-bar {
                 box-shadow: 0px -5px 20px #222;
+            }
+            .panel-body {
+                font-size: 14px;
+            }
+            #btn-quart, .btn[type=submit] {
+                font-size: 14px;
             }
         }
 
@@ -176,15 +240,15 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div id="map" class="col-md-9 col-md-push-3"></div>
-        <div id="side-bar" class="col-xs-12 col-md-3 col-md-pull-9">
+        <div id="map" class="col-md-8 col-md-push-4"></div>
+        <div id="side-bar" class="col-xs-12 col-md-4 col-md-pull-8">
             <div class="row" style="height: 100%">
                 <div id="panel-0" class="col-md-12" style="height: 100px"><div>
                 <div id="panel-1" class="col-xs-12 col-md-12">
                     <div id="panel-1-inside" class="panel panel-primary">
                         <div class="panel-body">Indiquer le point central du quartier suivant en cliquant sur la carte <br><br>
                         <span style=" font-weight: 400"><span style="color: #395;" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
-                        <div id="btn-quart" class="btn btn-block btn-lg btn-primary" disabled>Chateaucreux</div>
+                        <div id="btn-quart" class="btn btn-block btn-lg btn-primary" disabled></div>
                         </div>
                     </div>
                 </div>
@@ -199,10 +263,12 @@
                               <label><input type="radio" name="optradio">J'y travaille ou j'y ai travaillé</label>
                             </div>
                             <div class="radio">
+                              <label><input type="radio" name="optradio" >J'y fais mes courses</label>
+                            </div>
+                            <div class="radio">
                               <label><input type="radio" name="optradio" >Autre</label>
                             </div>
-                            <br>
-                             <button type="submit" class="btn btn-success btn-block btn-lg">Enregistrer et Continuer</button>
+                             <button type="submit" class="btn-submit btn btn-success btn-block btn-lg">Enregistrer et Continuer</button>
                         </form>
                         </div>
                     </div>
@@ -214,13 +280,22 @@
     </div>
 
    <script>
+     var counter = 0;
+     var map_center = {lat: 45.439695, lng: 4.387178};
+     var clickable = true;
+     var markersArray = [];
+     var quart_ids = [<?php echo $quart_ids[0] . ", " . $quart_ids[1] . ", " . $quart_ids[2]?>];
+     var quart_noms = [<?php echo '"' . $quart_noms[0] . '", "' . $quart_noms[1] . '", "' . $quart_noms[2] . '"'?>];
+
+     $("#btn-quart").text(quart_noms[counter]);
+
      // Create a map variable
      var map;
      // Initialize the map
      function initMap() {
        // Use a constructor to create a new map JS object
-       map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: 45.439695, lng: 4.387178},
+        map = new google.maps.Map(document.getElementById('map'), {
+        center: map_center,
         zoom: 14,
         styles: [{
                     featureType: "poi",
@@ -230,30 +305,72 @@
         streetViewControl:false,
         panControl:false,
         mapTypeId: google.maps.MapTypeId.HYBRID
-       });
+        });
 
-       var beaulieu = {lat: 45.428, lng: 4.416 };
-       var marker = new google.maps.Marker({
-        position: beaulieu,
-        map: map,
-        title: 'Beaulieu'
-       });
+        function addLatLng(event) {
+          // Add a new marker at the new plotted point on the polyline.
+          marker.setPosition(event.latLng);
+          marker.setMap(map);
+        }
 
-       var infowindow = new google.maps.InfoWindow({
+        // Add a listener for the click event
+        google.maps.event.addListener(map, 'click', function(event) {
+            if (clickable) {
+                var marker = new google.maps.Marker({animation: google.maps.Animation.DROP});
+                marker.setPosition(event.latLng);
+                marker.setMap(map);
+                markersArray.push(marker);
+                console.log(markersArray);
+                if ($('#btn-quart').css('font-size') == '22px' ||
+                    $('.navbar').css('top') == '-60px') {
+                    $('#panel-1').slideUp(400);
+                }
+                setTimeout(function() {
+                    $('#panel-2').slideDown(600);
+                    $("#drop-audio").get(0).play();
+                }, 600);
+                clickable = false;
+        }
+        });
+
+        var infowindow = new google.maps.InfoWindow({
         content: "<div class='container-fluid'><div class='panel panel-primary'><div class='panel .panel-heading'>Bealieu</div><div class='panel panel-body'>C'est le centre du quartier de <b style='color: red'>Beaulieu</b><br><br><button class='btn btn-success'>Continue</button></div><iframe src='https://coursera.org'></iframe></div></div>"
 
        });
 
-        marker.addListener('click', function() {
-        infowindow.open(map, marker);
-       });
-
+       //  marker.addListener('click', function() {
+       //  infowindow.open(map, marker);
+       // });
      }
+
+        $("form").submit(function(e) {
+            e.preventDefault();
+            });
+
+
+
+        $(".btn-submit").click(function() {
+            if (counter < 2) {
+                $("#panel-2").slideUp(500);
+                setTimeout(function() {
+                    $('#panel-1').slideUp(500);
+                }, 550);
+                map.setCenter(map_center);
+                map.setZoom(14);
+                setTimeout(function() {
+                    $('#panel-1').slideDown(500);
+                    $("#btn-quart").text(quart_noms[counter + 1]);
+                    counter += 1;
+                }, 600);
+                clickable = true;
+            }
+        });
+
    </script>
 
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYy2PP3wd5eysIDe9q-qL3cQ4Sx80nz_M&callback=initMap" async defer>
     </script>
-
+    <audio id="drop-audio" src="sounds/Button.mp3"></audio>
    <script src="js/bootstrap.min.js"></script>
 </body>
