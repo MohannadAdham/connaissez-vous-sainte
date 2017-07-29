@@ -38,6 +38,25 @@
     $quartiers = get_quartiers($db, $id);
     $quart_ids = $quartiers[0];
     $quart_noms = $quartiers[1];
+
+    function get_centres($db, $quart_ids) {
+        $centres_lat = [];
+        $centres_lng = [];
+        for ($j=0; $j<3; $j++) {
+            $quart_id = $quart_ids[$j];
+            $stmt = $db->query("SELECT lng, lat FROM centroides_quartiers
+                WHERE quart_id = $quart_id");
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $centres_lat[$j] = $row['lat'];
+            $centres_lng[$j] = $row['lng'];
+        }
+        return [$centres_lat, $centres_lng];
+    }
+
+    $centres = get_centres($db, $quart_ids);
+    $centres_lat = $centres[0];
+    $centres_lng = $centres[1];
+
 ?>
 
 <html>
@@ -51,6 +70,7 @@
     <script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
     <script src="js/jquery.ui.touch-punch.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link href="css/bootstrap-social.css" rel="stylesheet">
 <!--     <link rel="stylesheet" href="css/style.css">
@@ -283,14 +303,23 @@
    <script>
      var counter = 0;
      var map_center = {lat: 45.439695, lng: 4.387178};
+     // a variable to determine whether the map is clickable or not
      var clickable = true;
      var user_id = <?php echo $id ?>;
      console.log("user id : " + user_id);
-     var markersArray = [];
+     var user_markers = [];
+     var centres_markers = [];
+     var distances = [];
+
+     // pass the variables from php to JavaScript
      var quart_ids = [<?php echo $quart_ids[0] . ", " . $quart_ids[1] . ", " . $quart_ids[2]?>];
      var quart_noms = [<?php echo '"' . $quart_noms[0] . '", "' . $quart_noms[1] . '", "' . $quart_noms[2] . '"'?>];
+     var centres_lat = [<?php echo $centres_lat[0] . ", " . $centres_lat[1] . ", " . $centres_lat[2]?>];
+     var centres_lng = [<?php echo $centres_lng[0] . ", " . $centres_lng[1] . ", " . $centres_lng[2]?>];
+
 
      $("#btn-quart").text(quart_noms[counter]);
+     $("#btn-quart").attr('title', quart_noms[counter]);
 
      // Create a map variable
      var map;
@@ -309,7 +338,7 @@
         panControl:false,
         mapTypeId: google.maps.MapTypeId.HYBRID
         });
-         map.setOptions({ draggableCursor: 'crosshair' });
+        map.setOptions({ draggableCursor: 'crosshair' });
          // Different zoom for mobile devices
         if ($('.navbar').css('top') == '-60px') {
             map.setZoom(13); // for mobile
@@ -327,10 +356,10 @@
                 var marker = new google.maps.Marker({animation: google.maps.Animation.DROP});
                 marker.setPosition(event.latLng);
                 marker.setMap(map);
-                markersArray.push(marker);
+                user_markers.push(marker);
                 lat = marker.getPosition().lat();
                 lng = marker.getPosition().lng();
-                console.log(markersArray);
+                console.log(user_markers);
                 // Hide the first panel for tablet and mobile devices
                 if ($('#btn-quart').css('font-size') == '22px' ||
                     $('.navbar').css('top') == '-60px') {
@@ -363,7 +392,7 @@
 
 
         $(".btn-submit").click(function() {
-            if (counter < 2) {
+            if (counter < 3 && $('input[name="quart_choice"]:checked').val() != null) {
                 // hide the two panels one after the other
                 $("#panel-2").slideUp(500);
                 setTimeout(function() {
@@ -396,24 +425,97 @@
                 // reset the radio buttons' answer
                 $('input[name="quart_choice"]').prop('checked', false);
 
-                // show panel-1 again
-                setTimeout(function() {
-                    $('#panel-1').slideDown(500);
-                    $("#btn-quart").text(quart_noms[counter + 1]);
-                    counter += 1;
-                }, 600);
+                if (counter < 2 && $('input[name="quart_choice"]:checked').val() != '') { // Doesn't apply to final step
+                    // show panel-1 again
+                    setTimeout(function() {
+                        $('#panel-1').slideDown(500);
+                        console.log(counter);
+                        counter += 1;
+                        $("#btn-quart").text(quart_noms[counter]);
+                        $("#btn-quart").attr('title', quart_noms[counter]);
+                    }, 600);
+                }
+
+
                 // allow the click event on the map again
                 clickable = true;
                 map.setOptions({ draggableCursor: 'crosshair' });
-            } else if (counter == 2) {
-
             }
+
+            // the final step
+            if (counter == 2 && $('input[name="quart_choice"]:checked').val() != '') { // start if statement
+                var infowindow = new google.maps.InfoWindow();
+                var bounds = new google.maps.LatLngBounds();
+                for (var i = 0; i < quart_noms.length; i++) { // start for loop
+                    // create a marker for each center
+                    marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(centres_lat[i], centres_lng[i]),
+                    map: map,
+                    icon: "http://localhost/evs4/public/icons/flag-blue_44.png",
+                    animation: google.maps.Animation.DROP,
+                    animation: google.maps.Animation.BOUNCE
+                  });
+
+                    // set the infowindow for each marker
+                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                    return function() {
+                        infowindow.setContent(quart_noms[i]);
+                        infowindow.open(map, marker);
+                    }
+                  })(marker, i));
+
+                // Define a symbol using SVG path notation, with an opacity of 1.
+                // this symbol is for the lines between each two points
+                var lineSymbol = {
+                  path: 'M 0,-1 0,1',
+                  strokeColor: '#fff',
+                  strokeOpacity: 1,
+                  scale: 3
+                };
+
+                // Create the polyline, passing the symbol in the 'icons' property.
+                // Give the line an opacity of 0.
+                // Repeat the symbol at intervals of 20 pixels to create the dashed effect.
+                var line = new google.maps.Polyline({
+                  path: [{lat: centres_lat[i], lng: centres_lng[i]}, {lat: user_markers[i].getPosition().lat(), lng: user_markers[i].getPosition().lng()}],
+                  strokeOpacity: 0,
+                  icons: [{
+                    icon: lineSymbol,
+                    offset: '0',
+                    repeat: '15px'
+                  }],
+                  map: map
+                });
+
+                // extend the bounds to include all the markers
+                // extend the bounds to include the user added marker
+                var LatLng_user = new google.maps.LatLng(user_markers[i].getPosition().lat(),
+                 user_markers[i].getPosition().lng());
+                bounds.extend(LatLng_user);
+
+                // extend the bounds to include the marker of the actual center
+                var LatLng_center = new google.maps.LatLng(centres_lat[i],
+                 centres_lng[i]);
+                bounds.extend(LatLng_center);
+
+                // calculate distances
+                distance = google.maps.geometry.spherical.computeDistanceBetween(
+                    LatLng_center, LatLng_user);
+                distances.push(distance);
+                console.log(distances);
+
+                } // end of for loop
+
+                // prevent click after last step
+                clickable = false;
+                map.setOptions({ draggableCursor: 'normal' });
+            } // end of if statement
         });
 
    </script>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYy2PP3wd5eysIDe9q-qL3cQ4Sx80nz_M&callback=initMap" async defer>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYy2PP3wd5eysIDe9q-qL3cQ4Sx80nz_M&libraries=geometry&callback=initMap" async defer>
     </script>
     <audio id="drop-audio" src="sounds/Button.mp3"></audio>
    <script src="js/bootstrap.min.js"></script>
