@@ -91,7 +91,7 @@
             z-index: 10;
             height: 100%;
         }
-        #panel-1-inside, #panel-2-inside {
+        #panel-1-inside, #panel-2-inside, #panel-3-inside {
             margin-right: -15px;
             margin-left: -15px;
             border: 0;
@@ -115,7 +115,7 @@
             font-size: 16px;
         }
 
-        #panel-2 {
+        #panel-2, #panel-3 {
             display: none;
             position: relative;
         }
@@ -126,9 +126,16 @@
             text-overflow: ellipsis;
         }
 
+        #score {
+            width: 100%;
+            margin-left: 5%;
+            font-size: 32px;
+            color: #007E33;
+        }
+
         @media screen and (min-width: 992px) {
 
-            #panel-1 {
+            #panel-1, #panel-3 {
                 margin-top: 25%;
             }
             #panel-2 {
@@ -149,11 +156,11 @@
                 overflow: hidden;
                 box-shadow: 0 -5px 10px 0;
             }
-            #panel-1, #panel-2 {
+            #panel-1, #panel-2, #panel-3{
                 margin-top: 1em;
                 height: 80%;
             }
-            #panel-1-inside, #panel-2-inside {
+            #panel-1-inside, #panel-2-inside, #panel-3-inside {
                 margin-right: 0;
                 margin-left: 0;
             }
@@ -162,7 +169,7 @@
                 font-size: 18px;
             }
 
-            #panel-2 {display: none;}
+            #panel-2 , #panel-3 {display: none;}
 
             #btn-quart, .btn[type=submit] {
                 position: relative;
@@ -183,13 +190,13 @@
                 overflow: hidden;
             }
 
-            #panel-1, #panel-2 {
+            #panel-1, #panel-2, #panel-3 {
                 margin-top: 0;
             }
 
 
 
-            #panel-2 {display: none;}
+            #panel-2, #panel-3{display: none;}
 
             .navbar {
                 position: fixed;
@@ -291,6 +298,13 @@
                             </div>
                              <button type="submit" class="btn-submit btn btn-success btn-block btn-lg">Enregistrer et Continuer</button>
                         </form>
+                        </div>
+                    </div>
+                </div>
+                <div id="panel-3" class="col-xs-12 col-md-12">
+                    <div id="panel-3-inside" class="panel panel-primary">
+                        <div class="panel-body">Votre score est : &nbsp;&nbsp;
+                            <span id='score'>92%</span>
                         </div>
                     </div>
                 </div>
@@ -446,6 +460,9 @@
             if (counter == 2 && $('input[name="quart_choice"]:checked').val() != '') { // start if statement
                 var infowindow = new google.maps.InfoWindow();
                 var bounds = new google.maps.LatLngBounds();
+                var average_distance = 1637.390751; // The avereage distance between all the
+                // centroids and the nearest centroid (used near geoprocessing tool in ArcGIS)
+                var scores = [];
                 for (var i = 0; i < quart_noms.length; i++) { // start for loop
                     // create a marker for each center
                     marker = new google.maps.Marker({
@@ -458,57 +475,75 @@
 
                     // set the infowindow for each marker
                     google.maps.event.addListener(marker, 'click', (function(marker, i) {
-                    return function() {
-                        infowindow.setContent(quart_noms[i]);
-                        infowindow.open(map, marker);
-                    }
-                  })(marker, i));
+                        return function() {
+                            infowindow.setContent(quart_noms[i]);
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
 
-                // Define a symbol using SVG path notation, with an opacity of 1.
-                // this symbol is for the lines between each two points
-                var lineSymbol = {
-                  path: 'M 0,-1 0,1',
-                  strokeColor: '#fff',
-                  strokeOpacity: 1,
-                  scale: 3
-                };
+                    // Define a symbol using SVG path notation, with an opacity of 1.
+                    // this symbol is for the lines between each two points
+                    var lineSymbol = {
+                      path: 'M 0,-1 0,1',
+                      strokeColor: '#fff',
+                      strokeOpacity: 1,
+                      scale: 3
+                    };
 
-                // Create the polyline, passing the symbol in the 'icons' property.
-                // Give the line an opacity of 0.
-                // Repeat the symbol at intervals of 20 pixels to create the dashed effect.
-                var line = new google.maps.Polyline({
-                  path: [{lat: centres_lat[i], lng: centres_lng[i]}, {lat: user_markers[i].getPosition().lat(), lng: user_markers[i].getPosition().lng()}],
-                  strokeOpacity: 0,
-                  icons: [{
-                    icon: lineSymbol,
-                    offset: '0',
-                    repeat: '15px'
-                  }],
-                  map: map
-                });
+                    // Create the polyline, passing the symbol in the 'icons' property.
+                    // Give the line an opacity of 0.
+                    // Repeat the symbol at intervals of 20 pixels to create the dashed effect.
+                    var line = new google.maps.Polyline({
+                      path: [{lat: centres_lat[i], lng: centres_lng[i]}, {lat: user_markers[i].getPosition().lat(), lng: user_markers[i].getPosition().lng()}],
+                      strokeOpacity: 0,
+                      icons: [{
+                        icon: lineSymbol,
+                        offset: '0',
+                        repeat: '15px'
+                      }],
+                      map: map
+                    });
 
-                // extend the bounds to include all the markers
-                // extend the bounds to include the user added marker
-                var LatLng_user = new google.maps.LatLng(user_markers[i].getPosition().lat(),
-                 user_markers[i].getPosition().lng());
-                bounds.extend(LatLng_user);
+                    // extend the bounds to include all the markers
+                    // extend the bounds to include the user added marker
+                    var LatLng_user = new google.maps.LatLng(user_markers[i].getPosition().lat(),
+                     user_markers[i].getPosition().lng());
+                    bounds.extend(LatLng_user);
 
-                // extend the bounds to include the marker of the actual center
-                var LatLng_center = new google.maps.LatLng(centres_lat[i],
-                 centres_lng[i]);
-                bounds.extend(LatLng_center);
+                    // extend the bounds to include the marker of the actual center
+                    var LatLng_center = new google.maps.LatLng(centres_lat[i],
+                     centres_lng[i]);
+                    bounds.extend(LatLng_center);
 
-                // calculate distances
-                distance = google.maps.geometry.spherical.computeDistanceBetween(
-                    LatLng_center, LatLng_user);
-                distances.push(distance);
-                console.log(distances);
+                    // calculate distances
+                    distance = google.maps.geometry.spherical.computeDistanceBetween(
+                        LatLng_center, LatLng_user);
+                    distances.push(distance);
+                    console.log(distances);
+                    // calculate the score for this point
+                    score = ((average_distance - (distance - 50)) / average_distance) * 100;
+                    if (score >= 100) {score = 100;}
+                    // add the score to the array of scores
+                    scores.push(score);
 
                 } // end of for loop
+
+                // calculate final score
+                var sum = scores.reduce(function(a, b) { return a + b; });
+                var avg_score = Math.floor(sum / scores.length) + 1;
+                // add the average score to the third panel
+                $('#score').text(avg_score + '%');
+
+                // show the score panel
+                setTimeout(function() {
+                    $('#panel-3').slideDown(2000);
+                });
 
                 // prevent click after last step
                 clickable = false;
                 map.setOptions({ draggableCursor: 'normal' });
+
+
             } // end of if statement
         });
 
