@@ -305,6 +305,16 @@
                     <div id="panel-3-inside" class="panel panel-primary">
                         <div class="panel-body">Votre score est : &nbsp;&nbsp;
                             <span id='score'>92%</span>
+                            <br>
+                            <div id="distances">
+                                Votre estimation était à :
+                                <ul>
+                                    <li><span id="distance-1"></span> du 1er centre</li>
+                                    <li><span id="distance-2"></span> du 2ème centre</li>
+                                    <li><span id="distance-3"></span>  du 3ème centre</li>
+                                </ul>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -518,11 +528,24 @@
                     // calculate distances
                     distance = google.maps.geometry.spherical.computeDistanceBetween(
                         LatLng_center, LatLng_user);
+                    // add the distance to the score panel
+                    $('#distance-' + (i+1)).text(Math.round(distance) + ' m') ;
+                    //change the color of the distance in the score panel according to
+                    // the distance value
+                    if (distance < 500) {
+                        $('#distance-' + (i+1)).css('color', '#007E33');
+                    } else if (distance < 900) {
+                        $('#distance-' + (i+1)).css('color', '#FF8800');
+                    } else if (distance >= 900) {
+                        $('#distance-' + (i+1)).css('color', '#CC0000');
+                    }
+                    // add the distance to the array of distances
                     distances.push(distance);
                     console.log(distances);
                     // calculate the score for this point
                     score = ((average_distance - (distance - 50)) / average_distance) * 100;
-                    if (score >= 100) {score = 100;}
+                    if (score >= 100) {score = 100;};
+
                     // add the score to the array of scores
                     scores.push(score);
 
@@ -533,6 +556,13 @@
                 var avg_score = Math.floor(sum / scores.length) + 1;
                 // add the average score to the third panel
                 $('#score').text(avg_score + '%');
+                // change the score color
+                if (avg_score < 70) {
+                    $('#score').css('color', '#FF8800'); // orange color
+                };
+                if (avg_score < 40) {
+                    $('#score').css('color', '#CC0000'); // red color
+                };
 
                 // show the score panel
                 setTimeout(function() {
