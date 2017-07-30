@@ -129,10 +129,18 @@
         #score {
             width: 100%;
             margin-left: 5%;
-            font-size: 32px;
+            font-size: 3rem;
             color: #007E33;
         }
 
+        #distances {
+            margin-top: 1.5em;
+        }
+        #quart {
+            color: #4285F4;
+        }
+
+        /* media query for desktop and laptop */
         @media screen and (min-width: 992px) {
 
             #panel-1, #panel-3 {
@@ -144,9 +152,15 @@
             #side-bar {
                 overflow: hidden;
             }
+            #distances li {
+                margin-top: 1.2em;
+            }
+            .btn-group {
+                margin-top: 3em;
+            }
         }
 
-
+        /* media query for tablet devices */
         @media screen and (max-width: 991px) and (min-width: 521px) {
             html, body, { height: 100%; margin: 0; padding: 0; overflow: hidden;}
             #map {height: 70%;}
@@ -177,10 +191,11 @@
 */                font-size: 22px;
             }
 
+
         }
 
 
-
+         /*media query for mobile devices*/
         @media screen and (max-width: 520px) {
             #map {height: 60%;}
 
@@ -193,8 +208,6 @@
             #panel-1, #panel-2, #panel-3 {
                 margin-top: 0;
             }
-
-
 
             #panel-2, #panel-3{display: none;}
 
@@ -221,6 +234,10 @@
             }
             #btn-quart, .btn[type=submit] {
                 font-size: 14px;
+            }
+
+            #distances {
+                margin-top: 0.7em;
             }
         }
 
@@ -275,8 +292,8 @@
                 <div id="panel-1" class="col-xs-12 col-md-12">
                     <div id="panel-1-inside" class="panel panel-primary">
                         <div class="panel-body">Indiquer le point central du quartier suivant en cliquant sur la carte <br><br>
-                        <span style=" font-weight: 400"><span style="color: #395;" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
                         <div id="btn-quart" class="btn btn-block btn-lg btn-primary" data-toggle="tooltip" title="quartier name" disabled></div>
+                        <span style=" font-weight: 400"><span style="color: #395; margin-top:1.5em" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
                         </div>
                     </div>
                 </div>
@@ -307,12 +324,16 @@
                             <span id='score'>92%</span>
                             <br>
                             <div id="distances">
-                                Votre estimation était à :
+                                Votre estimation a été à :
                                 <ul>
-                                    <li><span id="distance-1"></span> du 1er centre</li>
-                                    <li><span id="distance-2"></span> du 2ème centre</li>
-                                    <li><span id="distance-3"></span>  du 3ème centre</li>
+                                    <li><span id="distance-1"></span> du centre de <?php echo $quart_noms[0]?></li>
+                                    <li><span id="distance-2"></span> du centre de <?php echo $quart_noms[1]?></li>
+                                    <li><span id="distance-3"></span> du centre de <?php echo $quart_noms[2]?></li>
                                 </ul>
+                                <div class="btn-group btn-group-justified">
+                                        <a class="btn btn-primary" value="Refresh Page" onClick="window.location.reload()">Rejouer &nbsp;&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a>
+                                        <a href="interes_reperes.php" class="btn btn-success">Suivant &nbsp;&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                </div>
 
                             </div>
                         </div>
@@ -348,7 +369,7 @@
      // Create a map variable
      var map;
      // Initialize the map
-     function initMap() {
+     function initMap() { // start initMap function
        // Use a constructor to create a new map JS object
         map = new google.maps.Map(document.getElementById('map'), {
         center: map_center,
@@ -404,16 +425,25 @@
 
        });
 
-       //  marker.addListener('click', function() {
-       //  infowindow.open(map, marker);
-       // });
-     }
+           //  marker.addListener('click', function() {
+           //  infowindow.open(map, marker);
+           // });
+         } // end initMap function
+
+        // Hide navbar while the mouse is over the map
+        $('#map').mouseenter(
+            function() {
+                $('.navbar').slideUp(1000);
+        });
+
+        $('#map').mouseleave(function() {
+                $('.navbar').slideDown(1000);
+        });
 
         // prohobit the submit button from refresh the page
         $("form").submit(function(e) {
             e.preventDefault();
             });
-
 
         $(".btn-submit").click(function() {
             if (counter < 3 && $('input[name="quart_choice"]:checked').val() != null) {
@@ -422,15 +452,16 @@
                 setTimeout(function() {
                     $('#panel-1').slideUp(500);
                 }, 550);
-                // reset the map center and zoom
-                map.setCenter(map_center);
-                // Different zoom for mobile devices
-                if ($('.navbar').css('top') == '-60px') {
-                    map.setZoom(13); // for mobile
-                } else {
-                map.setZoom(14); // for desktop, laptop and tablet
+                if (counter < 2) {
+                    // reset the map center and zoom
+                    map.setCenter(map_center);
+                    // Different zoom for mobile devices
+                    if ($('.navbar').css('top') == '-60px') {
+                        map.setZoom(13); // for mobile
+                    } else {
+                    map.setZoom(14); // for desktop, laptop and tablet
+                    }
                 }
-
                 // send the answer to the server
                 answer = $('input[name="quart_choice"]:checked').val();
                 console.log(answer);
@@ -473,12 +504,21 @@
                 var average_distance = 1637.390751; // The avereage distance between all the
                 // centroids and the nearest centroid (used near geoprocessing tool in ArcGIS)
                 var scores = [];
+                var image = {
+                        url: "http://localhost/evs4/public/icons/flag-blue_44.png",
+                        // This marker is 20 pixels wide by 32 pixels high.
+                        size: new google.maps.Size(44, 44),
+                        // The origin for this image is (0, 0).
+                        origin: new google.maps.Point(0, 0),
+                        // The anchor for this image is the base of the flagpole at (0, 32).
+                        anchor: new google.maps.Point(10, 40)
+                        };
                 for (var i = 0; i < quart_noms.length; i++) { // start for loop
                     // create a marker for each center
                     marker = new google.maps.Marker({
                     position: new google.maps.LatLng(centres_lat[i], centres_lng[i]),
                     map: map,
-                    icon: "http://localhost/evs4/public/icons/flag-blue_44.png",
+                    icon: image,
                     animation: google.maps.Animation.DROP,
                     animation: google.maps.Animation.BOUNCE
                   });
@@ -495,7 +535,7 @@
                     // this symbol is for the lines between each two points
                     var lineSymbol = {
                       path: 'M 0,-1 0,1',
-                      strokeColor: '#fff',
+                      strokeColor: '#222',
                       strokeOpacity: 1,
                       scale: 3
                     };
@@ -551,23 +591,32 @@
 
                 } // end of for loop
 
+                // set the bounds of the map
+                map.setMapTypeId('terrain');
+                map.fitBounds(bounds);
+
+                // Change the height of the map and the bar for mobile devices
+                if ($('.navbar').css('top') == '-60px') {
+                        $('#map, #side-bar').height('50%');
+
+                };
                 // calculate final score
                 var sum = scores.reduce(function(a, b) { return a + b; });
                 var avg_score = Math.floor(sum / scores.length) + 1;
                 // add the average score to the third panel
                 $('#score').text(avg_score + '%');
                 // change the score color
-                if (avg_score < 70) {
+                if (avg_score < 65) {
                     $('#score').css('color', '#FF8800'); // orange color
                 };
-                if (avg_score < 40) {
+                if (avg_score < 35) {
                     $('#score').css('color', '#CC0000'); // red color
                 };
 
                 // show the score panel
                 setTimeout(function() {
-                    $('#panel-3').slideDown(2000);
-                });
+                    $('#panel-3').slideDown(600);
+                }, 1000);
 
                 // prevent click after last step
                 clickable = false;
