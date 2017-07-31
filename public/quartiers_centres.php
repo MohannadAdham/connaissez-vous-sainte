@@ -1,5 +1,6 @@
 <?php
     require_once("../private/connect/connect.php");
+
     function get_unique_id() {
         if (isset($_COOKIE['id'])) {
             $uniqID = $_COOKIE['id'];
@@ -26,7 +27,7 @@
         $stmt = $db->query("SELECT quartID, quartNom FROM  quartiers INNER JOIN  rel_utilisateur_quartier ON (quart_id = quartID) WHERE utilisateur_id = {$id} ORDER BY rel_utilisateur_quartier.familiarite DESC");
         $quart_noms = [];
         $quart_ids = [];
-        for ($i=0; $i < 3; $i++) {
+        for ($i=0; $i < 6; $i++) {
             $row = $stmt->fetch(PDO::FETCH_NUM);
             $quart_ids[$i] = $row[0];
             $quart_noms[$i] = $row[1];
@@ -35,8 +36,20 @@
     }
 
     $quartiers = get_quartiers($db, $id);
-    $quart_ids = $quartiers[0];
-    $quart_noms = $quartiers[1];
+    $quart_ids_6 = $quartiers[0];
+    $quart_noms_6 = $quartiers[1];
+    $quart_ids = [];
+    $quart_noms = [];
+    // Get three randomly chosen quartiers from the list of six quartiers
+    $randoms = [];
+    for ($j=0; $j < 3; $j++) {
+        do {
+            $random = rand(0, 5);
+        } while (in_array($random, $randoms));
+        $randoms[] = $random;
+        $quart_ids[] = $quart_ids_6[$random];
+        $quart_noms[] = $quart_noms_6[$random];
+    };
 
     function get_centres($db, $quart_ids) {
         $centres_lat = [];
@@ -73,15 +86,14 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link href="css/bootstrap-social.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/quartiers_centres.css">
-    <style type="text/css">
 
-
-   </style>
 </head>
 
 
 
 <body >
+
+
     <nav  role="navigation" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -153,7 +165,7 @@
                 <div id="panel-3" class="col-xs-12 col-md-12">
                     <div id="panel-3-inside" class="panel panel-primary">
                         <div class="panel-body">Votre score est : &nbsp;&nbsp;
-                            <span id='score'>92%</span>
+                            <span id='score'></span>
                             <br>
                             <div id="distances">
                                 Votre estimation a été à :
@@ -178,7 +190,7 @@
     </div>
 
     <script type="text/javascript">
-     var user_id = <?php echo $id ?>;
+     var user_id = <?php echo "'" . $uniq_id . "'" ?>;
      var quart_ids = [<?php echo $quart_ids[0] . ", " . $quart_ids[1] . ", " . $quart_ids[2]?>];
      var quart_noms = [<?php echo '"' . $quart_noms[0] . '", "' . $quart_noms[1] . '", "' . $quart_noms[2] . '"'?>];
      var centres_lat = [<?php echo $centres_lat[0] . ", " . $centres_lat[1] . ", " . $centres_lat[2]?>];

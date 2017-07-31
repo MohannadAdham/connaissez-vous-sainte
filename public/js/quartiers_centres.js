@@ -6,6 +6,9 @@
      var user_markers = [];
      var centres_markers = [];
      var distances = [];
+     var user_centers_lat = [];
+     var user_centers_lng = [];
+     answers = [];
 
      $("#btn-quart").text(quart_noms[counter]);
      $("#btn-quart").attr('title', quart_noms[counter]);
@@ -48,6 +51,9 @@
                 user_markers.push(marker);
                 lat = marker.getPosition().lat();
                 lng = marker.getPosition().lng();
+                // Add the coordinates to the arrays
+                user_centers_lat.push(lat);
+                user_centers_lng.push(lng);
                 console.log(user_markers);
                 // Hide the first panel for tablet and mobile devices
                 if ($('#btn-quart').css('font-size') == '22px' ||
@@ -103,25 +109,15 @@
                     map.setZoom(14); // for desktop, laptop and tablet
                     }
                 }
-                // send the answer to the server
+                // get the answer from radio buttons
                 answer = $('input[name="quart_choice"]:checked').val();
+                answers.push(answer);
                 console.log(answer);
-                $.ajax({
-                    url: '../private/ajax/quartiers_centres.ajax.php',
-                    type: 'GET',
-                    data: {
-                        'id' : user_id,
-                        'quart_id' : quart_ids[counter],
-                        'quart_choix' : answer,
-                        'user_center_lat' : lat,
-                        'user_center_lng' : lng
-                    }
-                });
 
                 // reset the radio buttons' answer
                 $('input[name="quart_choice"]').prop('checked', false);
 
-                if (counter < 2 && $('input[name="quart_choice"]:checked').val() != '') { // Doesn't apply to final step
+                if (counter < 2) { // Doesn't apply to final step
                     // show panel-1 again
                     setTimeout(function() {
                         $('#panel-1').slideDown(500);
@@ -226,6 +222,9 @@
                     // calculate the score for this point
                     score = ((average_distance - (distance - 50)) / average_distance) * 100;
                     if (score >= 100) {score = 100;};
+                    // to avoid that one point affect the global score by more than 1/3
+                    if (score <= 0) {score = 0};
+                    console.log('score ' + i + ' = ' + score);
 
                     // add the score to the array of scores
                     scores.push(score);
@@ -253,6 +252,21 @@
                 if (avg_score < 35) {
                     $('#score').css('color', '#CC0000'); // red color
                 };
+
+                // Send the results to the server
+                $.ajax({
+                    url: '../private/ajax/quartiers_centres.ajax.php',
+                    type: 'GET',
+                    data: {
+                        'uniq_id' : user_id,
+                        'quart_ids' : quart_ids,
+                        'quart_choix' : answers,
+                        'user_centers_lat' : user_centers_lat,
+                        'user_centers_lng' : user_centers_lng ,
+                        'user_scores' : scores,
+                        'global_score' : avg_score
+                    }
+                });
 
                 // show the score panel
                 setTimeout(function() {
