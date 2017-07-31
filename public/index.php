@@ -132,14 +132,14 @@
         <div class="row">
             <div class="col-sm-6 col-md-4" >
                 <div class="card">
-                   <a href="quartiers.php"><img  src="images/quartiers.png" class="img-responsive"></a>
+                   <a href="quartiers.php"><img  src="images/quartiers_2.png" class="img-responsive"></a>
                    <div class="card-head">Test 1 : Positions des Quartiers</div>
                    <div class="card-body">condition préalable : Aucune</div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card">
-                    <img  src="images/quartiers_centres_2.png" class="img-responsive">
+                    <img  src="images/quartiers_centres_3.png" class="img-responsive">
                     <div class="card-head">Test 2 : Centres des Quartiers</div>
                    <div class="card-body">condition préalable : Test 1</div>
                 </div>

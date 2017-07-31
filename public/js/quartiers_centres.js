@@ -78,10 +78,10 @@
          } // end initMap function
 
         // Hide navbar while the mouse is over the map
-        $('#map').mouseenter(
-            function() {
-                $('.navbar').slideUp(1000);
-        });
+        // $('#map').mouseenter(
+        //     function() {
+        //         $('.navbar').slideUp(1000);
+        // });
 
         $('#map').mouseleave(function() {
                 $('.navbar').slideDown(1000);
@@ -147,7 +147,8 @@
                         // The origin for this image is (0, 0).
                         origin: new google.maps.Point(0, 0),
                         // The anchor for this image is the base of the flagpole at (10, 40).
-                        anchor: new google.maps.Point(10, 40)
+                        anchor: new google.maps.Point(10, 40),
+                        labelOrigin: new google.maps.Point(20, 30)
                         };
                 for (var i = 0; i < quart_noms.length; i++) { // start for loop
                     // create a marker for each center
@@ -155,10 +156,10 @@
                     position: new google.maps.LatLng(centres_lat[i], centres_lng[i]),
                     map: map,
                     icon: image,
+                    label: {text: String(i+1), color: "#007E33", fontWeight: 'bold'},
                     animation: google.maps.Animation.DROP,
                     animation: google.maps.Animation.BOUNCE
                   });
-
                     // set the infowindow for each marker
                     google.maps.event.addListener(marker, 'click', (function(marker, i) {
                         return function() {

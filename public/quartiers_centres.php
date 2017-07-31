@@ -129,8 +129,8 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div id="map" class="col-md-8 col-md-push-4"></div>
-        <div id="side-bar" class="col-xs-12 col-md-4 col-md-pull-8">
+        <div id="map" class="col-md-9 col-md-push-3"></div>
+        <div id="side-bar" class="col-xs-12 col-md-3 col-md-pull-9">
             <div class="row" style="height: 100%">
                 <div id="panel-0" class="col-md-12" style="height: 100px"><div>
                 <div id="panel-1" class="col-xs-12 col-md-12">

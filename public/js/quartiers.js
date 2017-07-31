@@ -24,7 +24,7 @@ $(document).ready(function() {
 
     // A hover effect: change the color of the plygon's border when the mouse enter the polygon
     $('path').mouseenter(function () {
-        $(this).css('stroke' , '#C36', );
+        $(this).css('stroke' , '#00C851', );
         $(this).css('stroke-width', '4');
 
     });
