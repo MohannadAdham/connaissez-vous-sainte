@@ -158,12 +158,34 @@ body {
  /*media query for mobile devices*/
 @media screen and (max-width: 520px) {
     #pano
- {height: 60%;}
+ {height: 70%;}
 
     #side-bar {
-        height: 40%;
+        height: 30%;
         padding-top: 1em;
         overflow: hidden;
+    }
+
+    #btn-interets {
+        float: right;
+        width: 115%;
+        height: 50px;
+        padding: 6px;
+        margin-top: 10%;
+        margin-bottom: 10%;
+        margin-right: -8%;
+        margin-left: 0;
+    }
+
+    #btn-reperes {
+        float: left;
+        width: 115%;
+        height: 50px;
+        padding: 6px;
+        margin-top: 10%;
+        margin-bottom: 10%;
+        margin-left: -8%;
+        margin-right: 0;
     }
 
     #panel-1, #panel-2, #panel-3 {
