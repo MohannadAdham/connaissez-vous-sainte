@@ -61,7 +61,7 @@
         .card-head {
             margin-left: 5%;
             margin-right: 5%;
-            margin-top: 4%;
+            margin-top: 10%;
             font-weight: 500;
             font-size: 2rem;;
             line-height: 2.25rem;
@@ -72,7 +72,7 @@
         .card-body {
             margin-left: 5%;
             margin-right: 5%;
-            margin-top: 4%;
+            margin-top: 6%;
             font-size: 1.5rem;
             color: #2e3d49;
             font-weight: 500;
@@ -121,7 +121,7 @@
     <header class="jumbotron">
         <div class="container-fluid">
             <div class="row row-header">
-                <div class="col-xs-8 col-sm-7 col-md-6 col-md-offset-1">
+                <div class="col-xs-8 col-sm-7 col-md-4 col-md-offset-1">
                     <h1 id="header1">Connaissez-Vous Sainté ?</h1>
                 </div>
             </div>
