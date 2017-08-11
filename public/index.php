@@ -33,52 +33,13 @@
     <title>Connaissez-vous Sainté ?</title>
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
     <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css"> -->
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap-social.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 
-    <style >
-        .card {
-            margin-top: 2em;
-            box-shadow: 5px 5px 25px 0;
-            border-radius: 0.375em;
-            height: 22.5em;
-            background-color: #fff;
 
-            }
-
-        .navbar-brand {
-            position: relative;
-            top: -5px;
-            left: -10px;
-        }
-        footer {
-            margin-top: 4em;
-        }
-
-        .card-head {
-            margin-left: 5%;
-            margin-right: 5%;
-            margin-top: 10%;
-            font-weight: 500;
-            font-size: 2rem;;
-            line-height: 2.25rem;
-            color: #2e3d49;
-            font-family: "Open Sans", sans-serif;
-        }
-
-        .card-body {
-            margin-left: 5%;
-            margin-right: 5%;
-            margin-top: 6%;
-            font-size: 1.5rem;
-            color: #2e3d49;
-            font-weight: 500;
-            font-family: "Open Sans", sans-serif;
-        }
-    </style>
 
 
 </head>
@@ -107,7 +68,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="quartiers.php">Noms des Quartiers</a></li>
                             <li><a href="quartiers_centres.php">Centres des Quartiers</a></li>
-                            <li><a href="interes_reperes.php">Points d'Interêts VS de Repères</a></li>
+                            <li><a href="interets_reperes.php">Points d'Interêts VS de Repères</a></li>
                             <li><a href="interes.php">Points d'Interêts</a></li>
                             <li><a href="reperes.php">Points de Repères</a></li>
 
@@ -146,7 +107,7 @@
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card">
-                    <img  src="images/quartiers.png" class="img-responsive">
+                    <img  src="images/interets_reperes.png" class="img-responsive">
                     <div class="card-head">Test 3 : Points d'Interets VS Points de repères</div>
                    <div class="card-body">condition préalable : Test 2</div>
                 </div>

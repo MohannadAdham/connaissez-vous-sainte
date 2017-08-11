@@ -1,3 +1,80 @@
+<?php
+    require_once("../private/connect/connect.php");
+
+    function get_unique_id() {
+        if (isset($_COOKIE['id'])) {
+            $uniqID = $_COOKIE['id'];
+            return $uniqID;
+        } else {
+            alert("Please take the first test");
+        }
+    }
+
+    function id_from_unique_id($db, $uniq_id) {
+        $stmt = $db->prepare('SELECT utilisateur_id FROM utilisateurs WHERE uniq_id = :uniq_id');
+        $stmt->bindParam(':uniq_id', $uniq_id);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        $id = $row[0];
+        return $id;
+    }
+
+    $uniq_id = get_unique_id();
+    $id = id_from_unique_id($db, $uniq_id);
+
+
+    function get_quartiers($db, $id) {
+        $stmt = $db->query("SELECT quartID, quartNom FROM  quartiers INNER JOIN  rel_utilisateur_quartier ON (quart_id = quartID) WHERE utilisateur_id = {$id} ORDER BY rel_utilisateur_quartier.familiarite DESC");
+        $quart_noms = [];
+        $quart_ids = [];
+        for ($i=0; $i < 6; $i++) {
+            $row = $stmt->fetch(PDO::FETCH_NUM);
+            $quart_ids[$i] = $row[0];
+            $quart_noms[$i] = $row[1];
+        }
+        return [$quart_ids, $quart_noms];
+    }
+
+    $quartiers = get_quartiers($db, $id);
+    $quart_ids_6 = $quartiers[0];
+    $quart_noms_6 = $quartiers[1];
+    $quart_ids = [];
+    $quart_noms = [];
+    // Get three randomly chosen quartiers from the list of six quartiers
+    $randoms = [];
+    for ($j=0; $j < 3; $j++) {
+        do {
+            $random = rand(0, 5);
+        } while (in_array($random, $randoms));
+        $randoms[] = $random;
+        $quart_ids[] = $quart_ids_6[$random];
+        $quart_noms[] = $quart_noms_6[$random];
+    };
+
+    function get_centres($db, $quart_ids) {
+        $centres_lat = [];
+        $centres_lng = [];
+        for ($j=0; $j<3; $j++) {
+            $quart_id = $quart_ids[$j];
+            $stmt = $db->query("SELECT lng, lat FROM centroides_quartiers
+                WHERE quart_id = $quart_id");
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            $centres_lat[$j] = $row['lat'];
+            $centres_lng[$j] = $row['lng'];
+        }
+        return [$centres_lat, $centres_lng];
+    }
+
+    $centres = get_centres($db, $quart_ids);
+    $centres_lat = $centres[0];
+    $centres_lng = $centres[1];
+
+?>
+
+
+
+
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -61,24 +138,17 @@
         <div id="pano" class="col-md-12"></div>
         <div id="side-bar" class="col-xs-12 col-md-12">
             <div class="row" style="height: 100%">
-<!--                 <div id="panel-1" class="col-xs-12 col-md-12">
-                    <div id="panel-1-inside" class="panel panel-primary">
-                        <div class="panel-body">Indiquer le point central du quartier suivant en cliquant sur la carte <br><br>
-                        <div id="btn-quart" class="btn btn-block btn-lg btn-primary" data-toggle="tooltip" title="quartier name" disabled></div>
-                        <span style=" font-weight: 400"><span style="color: #395; margin-top:1.5em" class="glyphicon glyphicon-info-sign glyphicon-success"></span>&nbsp; vous pouvez zoomer et vous déplacer dans la carte</span><br><br>
-                        </div>
-                    </div>
-                </div> -->
 
                     <div class="col-xs-6 col-sm-3  col-md-4 ">
-                        <button id="btn-interets" class="btn btn-lg btn-danger"> Points d'Interets </button>
+                        <button id="btn-interets" class="btn btn-lg btn-danger"> Point d'Interet </button>
                     </div>
                     <div class="col-xs-6 col-sm-3 col-sm-push-6 col-md-4 col-md-push-4">
-                        <button id="btn-reperes" class="btn btn-lg btn-primary">Points de reperes</button>
+                        <button id="btn-reperes" class="btn btn-lg btn-primary">Point de Repere</button>
                     </div>
 
                     <div class="col-xs-12 col-sm-6 col-sm-pull-3 col-md-4 col-md-pull-4">
                         <?php include_once("timer.php"); ?>
+                        <div id='question'>Est-il bien situé ?<div>
                     </div>
 
 
@@ -93,9 +163,9 @@
 
     <script src="js/interets_reperes.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/timer.js"></script>
+    <!-- <script type="text/javascript" src="js/timer.js"></script> -->
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiSZwMauUGqaWkRb-y0s17UlpdlaTafhk&libraries=geometry,places&callback=init&" async defer>
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiSZwMauUGqaWkRb-y0s17UlpdlaTafhk&libraries=geometry,places&callback=init" async defer>
     </script>
 
   </body>

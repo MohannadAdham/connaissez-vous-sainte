@@ -24,6 +24,27 @@ body {
     margin-left: -30px;
 }
 
+#question {
+    background: #e3e3e3;
+    margin: 0px auto;
+    border-radius:9px;
+    width: 80%;
+    height: 60px;
+    padding: 6px;
+    padding-top: 2%;
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 3%;
+    display: none;
+    font-size: 2em;
+    font-weight: 500;
+/*    border: solid 3px #222;
+*/    box-shadow: 5px 5px 25px black;
+}
+
+
+
+
 #side-bar {
     box-shadow: 0px -10px 30px #111;
     background-color: #2c363f;

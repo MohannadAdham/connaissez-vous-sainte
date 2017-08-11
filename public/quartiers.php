@@ -204,7 +204,7 @@
                             <li class="active"><a href="quartiers.php">Noms des Quartiers</a></li>
                             <li><a href="quartiers_centres.php">Centres des Quartiers</a></li>
                             <li><a href="interes_reperes.php">Points d'Interêts VS de Repères</a></li>
-                            <li><a href="interes.php">Points d'Interêts</a></li>
+                            <li><a href="interets.php">Points d'Interêts</a></li>
                             <li><a href="reperes.php">Points de Repères</a></li>
                         </ul>
                     </li>

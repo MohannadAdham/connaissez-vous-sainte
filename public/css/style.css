@@ -5,6 +5,45 @@
     background-position: center center;
 }
 
+.card {
+    margin-top: 2em;
+    box-shadow: 5px 5px 25px 0;
+    border-radius: 0.375em;
+    height: 22.5em;
+    background-color: #fff;
+
+    }
+
+.navbar-brand {
+    position: relative;
+    top: -5px;
+    left: -10px;
+}
+footer {
+    margin-top: 4em;
+}
+
+.card-head {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 10%;
+    font-weight: 500;
+    font-size: 2rem;;
+    line-height: 2.25rem;
+    color: #2e3d49;
+    font-family: "Open Sans", sans-serif;
+}
+
+.card-body {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 6%;
+    font-size: 1.5rem;
+    color: #2e3d49;
+    font-weight: 500;
+    font-family: "Open Sans", sans-serif;
+}
+
 #header1 {
     color:rgb(250, 250, 250);
     font-size: 4em;
@@ -34,28 +73,48 @@ footer {
 
 
 @media screen and (min-width: 768px) {
-    h1 {
-        font-size:60px;
-    }
+
 
 }
 
 @media screen and (min-width: 992px) {
-    h1 {
-        font-size: 80px;
-    }
+
 }
 @media screen and (min-width: 1200px) {
-    h1 {
-        font-size: 100px;
-    }
+
 }
 
-@media screen and (max-width: 767px) {
-    h1 {
-        font-size:20px;
-    }
+@media screen and (max-width: 589px) and (min-width: 400px) {
+
+        .card {
+        height: 28em;
+
+        }
 }
+
+@media screen and (max-width: 767px) and (min-width: 590px) {
+
+        .card {
+        height: 38em;
+        }
+
+        .card-head {
+        font-size:  2.5rem;
+        }
+
+        .card-body {
+        font-size: 1.8rem;
+        }
+}
+
+@media screen and (max-width: 390px) {
+
+        .navbar-brand {
+            display: none;
+        }
+    };
+
+
 
 
 
