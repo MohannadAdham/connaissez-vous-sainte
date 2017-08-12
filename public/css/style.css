@@ -1,5 +1,10 @@
+body {
+    background: white;
+}
+
+
 .jumbotron   {
-    height: 450px;
+    height: 70vh;
     background-size: cover;
     background-image: url("../images/saint-etienne.jpg");
     background-position: center center;
@@ -84,12 +89,16 @@ footer {
 
 }
 
-@media screen and (max-width: 589px) and (min-width: 400px) {
+@media screen and (max-width: 589px) {
 
         .card {
-        height: 28em;
-
+            height: 50vh;
         }
+
+        .jumbotron {
+            height: 100vh;
+        }
+
 }
 
 @media screen and (max-width: 767px) and (min-width: 590px) {

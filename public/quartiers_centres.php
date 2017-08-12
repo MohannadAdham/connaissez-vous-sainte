@@ -176,7 +176,7 @@
                                 </ul>
                                 <div class="btn-group btn-group-justified">
                                         <a class="btn btn-primary" value="Refresh Page" onClick="window.location.reload()">Rejouer &nbsp;&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i></a>
-                                        <a href="interes_reperes.php" class="btn btn-success">Suivant &nbsp;&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                                        <a href="interets_reperes.php" class="btn btn-success">Suivant &nbsp;&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></a>
                                 </div>
 
                             </div>

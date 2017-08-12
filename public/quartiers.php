@@ -28,7 +28,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" id="scale1">
     <title>Puzzle - Quartiers</title>
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
     <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
@@ -61,7 +61,7 @@
                 text-align: left;
         }
         svg {
-            background: url(http://localhost/evs4/public/images/Basemap_small.png);
+            background: url("images/Basemap_small.png");
             background-size:auto 100%;
             margin: 0;
             position: relative;
@@ -120,15 +120,20 @@
 
         }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 767px) {
         nav {
             position: fixed;
             top: -60px;
         }
 
+        svg {
+            height: 53vh;
+        }
+
         .btn-block {
             padding-bottom: 3px;
             padding-top: 3px;
+            height: 15%;
         }
 
         .navbar-toggle {
@@ -142,9 +147,20 @@
         }
 
         svg {
-            width: 125%;
-            margin-left: -17%;
-            margin-top: -18%;
+            width: 140%;
+            margin-left: -28%;
+            margin-top: -19%;
+            background-position: 52% 36%;
+        }
+
+        .mobile_group_2, .mobile_group_3 {
+            display: none;
+        }
+        #side-bar-right {
+            display: none;
+        }
+        #side-bar-left {
+            height: 39vh;
         }
     }
 
@@ -260,7 +276,7 @@
                 ?>
             </div>
 
-            <div id="side-bar-left" class="col-xs-6 col-sm-6 col-md-3 col-md-pull-6 side-bar btn-group-vertical" height="100%" >
+            <div id="side-bar-left" class="col-xs-12 col-sm-6 col-md-3 col-md-pull-6 side-bar btn-group-vertical"  >
 
             <?php
                 // Add the names of the neighborhoods randomly to the buttons to avoid
@@ -268,18 +284,24 @@
                 $id_quart_ajoute = []; // an array contains the IDs of the added neighborhoods
                 $counter = 0;
                 while ($counter < 9) {
+                    // Add mobile classes
+                    if ($counter < 6) {
+                        $mobile_class = "mobile_group_1";
+                    } else {
+                        $mobile_class = "mobile_group_2";
+                    }
                     $random_index = rand(0, 17);
                     $row = $results[$random_index];
                     $quart_id = $row['quartID'];
                     $quartier = $row['quartNom'];
                     if ($counter % 2 != 0  && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button data-toggle="tooltip" style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button data-toggle="tooltip" style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block ' . $mobile_class . '" ><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                          $id_quart_ajoute[] = $quart_id;
                          $counter += 1;
                     }
 
                     if ($counter % 2 == 0 && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block ' . $mobile_class . '"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                         $id_quart_ajoute[] = $quart_id;
                         $counter += 1;
                     }
@@ -288,23 +310,28 @@
         </div>
 
 
-            <div id="side-bar-right" class="col-xs-6 col-sm-6 col-md-3 side-bar btn-group-vertical" height="600px"  >
+            <div id="side-bar-right" class="col-xs-12 col-sm-6 col-md-3 side-bar btn-group-vertical"   >
 
             <?php
                 $counter = 0;
                 while ($counter < 9) {
+                    if ($counter < 3) {
+                        $mobile_class = "mobile_group_2";
+                    } else {
+                        $mobile_class = "mobile_group_3";
+                    }
                     $random_index = rand(0, 17);
                     $row = $results[$random_index];
                     $quart_id = $row['quartID'];
                     $quartier = $row['quartNom'];
                     if ($counter % 2 == 0  && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #999; border-color: #999; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block ' . $mobile_class . '"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                          $id_quart_ajoute[] = $quart_id;
                          $counter += 1;
                     }
 
                     if ($counter % 2 != 0 && !in_array($quart_id, $id_quart_ajoute)) {
-                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
+                         echo '<button style="background: #1c262f; border-color: #1c262f; box-shadow: 0px 0px 2px #1c262f" class="btn btn-success btn-block ' . $mobile_class . '"><span id="quart_' . $quart_id . '"  class="drag-me" data-toggle="tooltip" title="' . $quartier . '"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp; ' . $quartier . '</span></button>';
                         $id_quart_ajoute[] = $quart_id;
                         $counter += 1;
                     }

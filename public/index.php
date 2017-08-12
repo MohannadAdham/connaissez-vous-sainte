@@ -38,13 +38,9 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <link href="css/bootstrap-social.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
-
-
-
 </head>
 
-<body style="background: #DDD">
+<body>
     <nav style="background-color: #1c262f; box-shadow: 0 5px 15px black; border-color:transparent;" role="navigation" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -89,7 +85,7 @@
         </div>
     </header>
 
-    <section class="container">
+    <main class="container">
         <div class="row">
             <div class="col-sm-6 col-md-4" >
                 <div class="card">
@@ -120,7 +116,7 @@
         </div>
 
 
-    </section>
+    </main>
 
 
 
@@ -131,22 +127,22 @@
                 <div class="col-xs-5 col-xs-offset-1 col-sm-2 col-sm-offset-1">
                     <h5>Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Tests</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
                 </div>
                 <div class="col-xs-6 col-sm-5">
                     <h5>Our Address</h5>
                     <address>
-                      121, Clear Water Bay Road<br>
-                      Clear Water Bay, Kowloon<br>
-                      HONG KONG<br>
-                      <i class="fa fa-phone"></i>: +852 1234 5678<br>
-                      <i class="fa fa-fax"></i>: +852 8765 4321<br>
+                      ...<br>
+                      ...<br>
+                      ...<br>
+                      <i class="fa fa-phone"></i>: +33<br>
+                      <i class="fa fa-fax"></i>: +33<br>
                       <i class="fa fa-envelope"></i>:
-                        <a href="mailto:confusion@food.net">confusion@food.net</a>
+                        <a href="mailto:confusion@food.net">mohannad.adm"gmail.com</a>
                    </address>
                 </div>
                 <div class="col-xs-12 col-sm-4">
@@ -161,7 +157,7 @@
                 </div>
                 <div class="col-xs-12">
                     <p style="padding:10px;"></p>
-                    <p align=center>© Copyright 2015 Ristorante Con Fusion</p>
+                    <p align=center>© Copyright 2017 Université Jean Monnet</p>
                 </div>
             </div>
         </div>
