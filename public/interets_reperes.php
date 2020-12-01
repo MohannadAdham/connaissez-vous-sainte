@@ -80,7 +80,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Centres des Quartiers</title>
+    <title>Interets vs. Reperes</title>
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
     <script type="text/javascript" src="js/jquery-3.2.0.js"></script>
     <script src="js/jquery-ui-1.12.1/jquery-ui.js"></script>
@@ -94,6 +94,12 @@
 
 
 </head>
+
+    <script type="text/javascript">
+    $(window).on('load',function(){
+        $('#largeModal').modal('show');
+    });
+    </script>
 
 
 
@@ -132,6 +138,28 @@
                 </ul>
             </div>
     </nav>
+        <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Points d'interêts VS. Points de repères</h4>
+          </div>
+          <div class="modal-body">
+            <h4 style="color:#28d">Points de repères</h4>
+            <p>Les Points de Repères servent à s'orienter. Ils sont de nature très variée : un bâtiment original, une rue au tracé particulier, une place historique, un pont, un obstacle à la circulation...</p>
+            <h4 style="color:#d45">Points d'interêts</h4>
+            <p>Un lieu d’intérêt est un élément localisé ayant un attrait commercial, touristique, culturel, sportif, ludique ou autre. Il peut s’agir d’hôpitaux, de stations services, de monuments touristiques ou de n’importe quel type de magasins.</p>
+            <img src="images/example.jpg" height="50%" width="50%">
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-lg btn-primary" <!-- data-dismiss="modal" -->Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="container-fluid">
       <div class="row">
@@ -161,9 +189,10 @@
     <audio id="watch-tick" src="sounds/watch-tick.wav"></audio>
 
 
+
     <script src="js/interets_reperes.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <!-- <script type="text/javascript" src="js/timer.js"></script> -->
+    <script type="text/javascript" src="js/timer.js"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiSZwMauUGqaWkRb-y0s17UlpdlaTafhk&libraries=geometry,places&callback=init" async defer>
     </script>

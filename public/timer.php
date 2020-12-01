@@ -88,7 +88,7 @@
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
     </div>
-    <div class="digit-two num-one">
+    <div class="digit-two num-three">
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
@@ -148,7 +148,7 @@
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
     </div>
-    <div class="digit-three num-three">
+    <div class="digit-three num-zero">
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
@@ -192,7 +192,7 @@
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
     </div>
-    <div class="digit-four num-five">
+    <div class="digit-four num-zero">
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>
       <div class="circle-contain"></div>

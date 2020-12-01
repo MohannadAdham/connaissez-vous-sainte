@@ -1,5 +1,5 @@
 
-
+function timer() {
 
 var decrementDigit;
 
@@ -81,4 +81,4 @@ decrementDigit = function(e) {
 
 
 };
-
+}

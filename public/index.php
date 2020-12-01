@@ -96,14 +96,14 @@
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card">
-                    <img  src="images/quartiers_centres_3.png" class="img-responsive">
+                    <a href="quartiers_centres.php"><img  src="images/quartiers_centres_3.png" class="img-responsive"></a>
                     <div class="card-head">Test 2 : Centres des Quartiers</div>
                    <div class="card-body">condition préalable : Test 1</div>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="card">
-                    <img  src="images/interets_reperes.png" class="img-responsive">
+                    <a href="interets_reperes.php"><img  src="images/interets_reperes.png" class="img-responsive"></a>
                     <div class="card-head">Test 3 : Points d'Interets VS Points de repères</div>
                    <div class="card-body">condition préalable : Test 2</div>
                 </div>

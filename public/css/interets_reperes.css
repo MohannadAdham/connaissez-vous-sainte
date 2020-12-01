@@ -130,10 +130,11 @@ body {
 /* media query for tablet devices */
 @media screen and (max-width: 991px) and (min-width: 521px) {
     html, body, { height: 100%; margin: 0; padding: 0; overflow: hidden;}
-    #pano
- {height: 90%;}
+    #pano{
+        height: 85%;
+    }
     #side-bar {
-        height: 10%;
+        height: 15%;
         padding-top: 1em;
         overflow: hidden;
         box-shadow: 0 -5px 10px 0;
@@ -179,10 +180,10 @@ body {
  /*media query for mobile devices*/
 @media screen and (max-width: 520px) {
     #pano
- {height: 70%;}
+ {height: 65%;}
 
     #side-bar {
-        height: 30%;
+        height: 35%;
         padding-top: 1em;
         overflow: hidden;
     }

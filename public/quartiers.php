@@ -171,10 +171,11 @@
     }
 
 
-    @media (min-width: 1000px) {
+    @media (min-width: 768px) {
         .row.equal {
         overflow: hidden;
     }
+
 
     .row.equal [class*="col-"]{
         margin-bottom: -99999px;
@@ -185,7 +186,6 @@
     @media screen and (max-width: 1200px) {
         .btn-block {
             margin-bottom: 5px;
-
         }
     }
 
